@@ -2,12 +2,7 @@ import React from 'react'
 import './App.css'
 import { Router, Switch, Route } from 'react-router-dom'
 import { createBrowserHistory } from 'history'
-import {
-  NavComponent,
-  HeaderComponent,
-  HomeComponent,
-  NotFoundComponent,
-} from './components/index'
+import { NavComponent, HeaderComponent, HomeComponent, NotFoundComponent } from './components/index'
 
 const history = createBrowserHistory()
 
