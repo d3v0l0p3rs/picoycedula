@@ -2,7 +2,7 @@
   "name": "base-app",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://d3v0l0p3rs.github.io/base-app",
+  "homepage": "http://d3v0l0p3rs.github.io/picoycedula",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
