@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/picoycedula/static/css/main.b3659515.chunk.css",
+    "main.js": "/picoycedula/static/js/main.903cacd9.chunk.js",
+    "main.js.map": "/picoycedula/static/js/main.903cacd9.chunk.js.map",
+    "runtime-main.js": "/picoycedula/static/js/runtime-main.68981660.js",
+    "runtime-main.js.map": "/picoycedula/static/js/runtime-main.68981660.js.map",
+    "static/js/2.78f4d9a3.chunk.js": "/picoycedula/static/js/2.78f4d9a3.chunk.js",
+    "static/js/2.78f4d9a3.chunk.js.map": "/picoycedula/static/js/2.78f4d9a3.chunk.js.map",
+    "index.html": "/picoycedula/index.html",
+    "precache-manifest.4ffdb39a528efbbfa813979f14914564.js": "/picoycedula/precache-manifest.4ffdb39a528efbbfa813979f14914564.js",
+    "service-worker.js": "/picoycedula/service-worker.js",
+    "static/css/main.b3659515.chunk.css.map": "/picoycedula/static/css/main.b3659515.chunk.css.map",
+    "static/js/2.78f4d9a3.chunk.js.LICENSE.txt": "/picoycedula/static/js/2.78f4d9a3.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.68981660.js",
+    "static/js/2.78f4d9a3.chunk.js",
+    "static/css/main.b3659515.chunk.css",
+    "static/js/main.903cacd9.chunk.js"
+  ]
+}
