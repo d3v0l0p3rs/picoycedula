@@ -1,21 +1,32 @@
 import React, { useState } from 'react'
 import { pico_y_cedula, pico_y_placa } from '../../data'
-import { SetState, Entity, GoOutState } from './home.types'
-import { getCurrentDate } from './helpers'
+import { SetState, Entity, GoOutState, GoOutWeekState } from './home.types'
+import { getCurrentDate, getCurrentWeek, dayOfWeekString } from './helpers'
+
+const data = { person: pico_y_cedula, vehicle: pico_y_placa }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const setLastIDNumber = (lastIDNumber: number, entity: Entity, callback: SetState) => (_: unknown) => {
   callback(canGoOut(lastIDNumber, entity))
 }
 
-const canGoOut = (lastIDNumber: number, entity: Entity): GoOutState => {
-  const data = { person: pico_y_cedula, vehicle: pico_y_placa }
-  const validLastIDNumbers = data[entity][getCurrentDate()]
+const canGoOut = (lastIDNumber: number, entity: Entity, date = ''): GoOutState => {
+  const validLastIDNumbers = data[entity][date || getCurrentDate()]
   if (!validLastIDNumbers) return 'ERROR'
   return validLastIDNumbers.some(v => v === lastIDNumber) ? 'YES' : 'NO'
 }
 
-const message = (state: GoOutState, entity: Entity): string => {
+const canGoOutWeek = (lastIDNumber: number, entity: Entity): GoOutWeekState => {
+  const currentWeek = getCurrentWeek()
+  const result: GoOutWeekState = []
+  currentWeek.forEach((date, i) => {
+    result.push({ canGoOut: canGoOut(lastIDNumber, entity, date), day: dayOfWeekString[i] })
+  })
+  return result
+}
+
+const messageForToday = (state: GoOutState, entity: Entity): string => {
+  // Esto es solo para mostrar los datos y ya, se puede borrar eventualmente
   const messages = {
     YES: { person: 'Puedes salir', vehicle: 'Puedes conducir' },
     NO: { person: 'NO puedes salir', vehicle: 'NO puedes conducir' },
@@ -60,8 +71,11 @@ const HomeComponent: React.FC = (): JSX.Element => {
         <button onClick={setLastIDNumber(9, 'vehicle', setCanVehicleGoOut)}>9</button>
         <button onClick={setLastIDNumber(0, 'vehicle', setCanVehicleGoOut)}>0</button>
       </div>
-      <div>{message(canPersonGoOut, 'person')}</div>
-      <div>{message(canVehicleGoOut, 'vehicle')}</div>
+      <div>{messageForToday(canPersonGoOut, 'person')}</div>
+      <div>{messageForToday(canVehicleGoOut, 'vehicle')}</div>
+      {/* Estos json son para mostrar los datos planos porque me dio pereza organizarlos */}
+      <div>{JSON.stringify(canGoOutWeek(0, 'person'))}</div>
+      <div>{JSON.stringify(canGoOutWeek(0, 'vehicle'))}</div>
     </div>
   )
 }
