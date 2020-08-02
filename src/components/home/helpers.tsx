@@ -2,8 +2,7 @@ import { Day } from './home.types'
 
 export const getCurrentDate = (date: Date = new Date()): string => {
   const d = date || new Date()
-  const ts = (n: number): string =>
-    n < 10 ? '0' + n : n >= 100 ? '' + (n - 2000) : '' + n
+  const ts = (n: number): string => (n < 10 ? '0' + n : n >= 100 ? '' + (n - 2000) : '' + n)
   const strDate = `${ts(d.getFullYear())}/${ts(d.getMonth() + 1)}/${ts(d.getDate())}`
   return strDate
 }
@@ -28,3 +27,5 @@ export const dayOfWeekString: { [n: number]: Day } = {
   6: 'Sábado',
   7: 'Domingo',
 }
+
+export const DIGITS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]

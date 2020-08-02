@@ -1,33 +1,45 @@
 import React, { useState } from 'react'
-import { pico_y_cedula, pico_y_placa } from '../../data'
-import { SetState, Entity, GoOutState, GoOutWeekState } from '../index.types'
-import { getCurrentDate, getCurrentWeek, dayOfWeekString } from './helpers'
+import { pico_y_cedula, pico_y_placa, source } from '../../data'
+import { Entity, GoOutState, GoOutWeekState, City } from '../index.types'
+import { getCurrentDate, getCurrentWeek, dayOfWeekString, DIGITS } from './helpers'
 import Button from '@material-ui/core/Button'
+import FormControl from '@material-ui/core/FormControl'
+import Select from '@material-ui/core/Select'
+import MenuItem from '@material-ui/core/MenuItem'
 import { CardComponent } from '../index'
 
-const data = { person: pico_y_cedula, vehicle: pico_y_placa }
+const data = { person: pico_y_cedula, vehicle: pico_y_placa, source: source }
 
 const setLastIDNumber = (
   lastIDNumber: number,
   entity: Entity,
-  callback: SetState,
+  city: City,
+  callbacks: {
+    day?: (canGoOut: GoOutState) => void
+    week?: (goOutWeekState: GoOutWeekState) => void
+  },
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
 ) => (_: unknown) => {
-  callback(canGoOut(lastIDNumber, entity))
+  if (callbacks.day) {
+    callbacks.day(canGoOut(lastIDNumber, entity, city))
+  }
+  if (callbacks.week) {
+    callbacks.week(canGoOutWeek(lastIDNumber, entity, city))
+  }
 }
 
-const canGoOut = (lastIDNumber: number, entity: Entity, date = ''): GoOutState => {
-  const validLastIDNumbers = data[entity][date || getCurrentDate()]
+const canGoOut = (lastIDNumber: number, entity: Entity, city: City, date = ''): GoOutState => {
+  const validLastIDNumbers = data[entity][city][date || getCurrentDate()]
   if (!validLastIDNumbers) return 'ERROR'
   return validLastIDNumbers.some(v => v === lastIDNumber) ? 'YES' : 'NO'
 }
 
-const canGoOutWeek = (lastIDNumber: number, entity: Entity): GoOutWeekState => {
+const canGoOutWeek = (lastIDNumber: number, entity: Entity, city: City): GoOutWeekState => {
   const currentWeek = getCurrentWeek()
   const result: GoOutWeekState = []
   currentWeek.forEach((date, i) => {
     result.push({
-      canGoOut: canGoOut(lastIDNumber, entity, date),
+      canGoOut: canGoOut(lastIDNumber, entity, city, date),
       day: dayOfWeekString[i],
     })
   })
@@ -51,172 +63,124 @@ const messageForToday = (state: GoOutState, entity: Entity): string => {
 }
 
 const HomeComponent: React.FC = (): JSX.Element => {
-  const [canPersonGoOut, setCanPersonGoOut] = useState<GoOutState>('UNDEFINED')
-  const [canVehicleGoOut, setCanVehicleGoOut] = useState<GoOutState>('UNDEFINED')
+  const [currentCity, setCurrentCity] = useState<City>('CALI')
+  const [canPersonGoOutToday, setCanPersonGoOutToday] = useState<GoOutState>('UNDEFINED')
+  const [canPersonGoOutWeek, setCanPersonGoOutWeek] = useState<GoOutWeekState>([])
+  const [canVehicleGoOutToday, setCanVehicleGoOutToday] = useState<GoOutState>('UNDEFINED')
+  const [canVehicleGoOutWeek, setCanVehicleGoOutWeek] = useState<GoOutWeekState>([])
   return (
     <div className="App">
+      <div className="city-selector" style={{ padding: '20px' }}>
+        <FormControl>
+          <Select
+            value={currentCity}
+            onChange={e => {
+              setCurrentCity(e.target.value as City)
+            }}>
+            <MenuItem value={'CALI'}>Cali</MenuItem>
+          </Select>
+        </FormControl>
+      </div>
       <div className="person-last-id-number">
-        <Button
-          onClick={setLastIDNumber(1, 'person', setCanPersonGoOut)}
-          color="primary"
-          variant="outlined"
-          component="span">
-          1
-        </Button>
-        <Button
-          onClick={setLastIDNumber(2, 'person', setCanPersonGoOut)}
-          color="primary"
-          variant="outlined"
-          component="span">
-          2
-        </Button>
-        <Button
-          onClick={setLastIDNumber(3, 'person', setCanPersonGoOut)}
-          color="primary"
-          variant="outlined"
-          component="span">
-          3
-        </Button>
-        <Button
-          onClick={setLastIDNumber(4, 'person', setCanPersonGoOut)}
-          color="primary"
-          variant="outlined"
-          component="span">
-          4
-        </Button>
-        <Button
-          onClick={setLastIDNumber(5, 'person', setCanPersonGoOut)}
-          color="primary"
-          variant="outlined"
-          component="span">
-          5
-        </Button>
-        <Button
-          onClick={setLastIDNumber(6, 'person', setCanPersonGoOut)}
-          color="primary"
-          variant="outlined"
-          component="span">
-          6
-        </Button>
-        <Button
-          onClick={setLastIDNumber(7, 'person', setCanPersonGoOut)}
-          color="primary"
-          variant="outlined"
-          component="span">
-          7
-        </Button>
-        <Button
-          onClick={setLastIDNumber(8, 'person', setCanPersonGoOut)}
-          color="primary"
-          variant="outlined"
-          component="span">
-          8
-        </Button>
-        <Button
-          onClick={setLastIDNumber(9, 'person', setCanPersonGoOut)}
-          color="primary"
-          variant="outlined"
-          component="span">
-          9
-        </Button>
-        <Button
-          onClick={setLastIDNumber(0, 'person', setCanPersonGoOut)}
-          color="primary"
-          variant="outlined"
-          component="span">
-          0
-        </Button>
+        <p>Último número de tu cédula</p>
+        {DIGITS.map((value, index) => (
+          <Button
+            key={index}
+            onClick={setLastIDNumber(value, 'person', currentCity, {
+              day: setCanPersonGoOutToday,
+              week: setCanPersonGoOutWeek,
+            })}
+            color="primary"
+            variant="outlined"
+            component="span">
+            {value}
+          </Button>
+        ))}
       </div>
       <div className="vehicle-last-id-number">
-        <Button
-          onClick={setLastIDNumber(1, 'vehicle', setCanVehicleGoOut)}
-          color="primary"
-          variant="outlined"
-          component="span">
-          1
-        </Button>
-        <Button
-          onClick={setLastIDNumber(2, 'vehicle', setCanVehicleGoOut)}
-          color="primary"
-          variant="outlined"
-          component="span">
-          2
-        </Button>
-        <Button
-          onClick={setLastIDNumber(3, 'vehicle', setCanVehicleGoOut)}
-          color="primary"
-          variant="outlined"
-          component="span">
-          3
-        </Button>
-        <Button
-          onClick={setLastIDNumber(4, 'vehicle', setCanVehicleGoOut)}
-          color="primary"
-          variant="outlined"
-          component="span">
-          4
-        </Button>
-        <Button
-          onClick={setLastIDNumber(5, 'vehicle', setCanVehicleGoOut)}
-          color="primary"
-          variant="outlined"
-          component="span">
-          5
-        </Button>
-        <Button
-          onClick={setLastIDNumber(6, 'vehicle', setCanVehicleGoOut)}
-          color="primary"
-          variant="outlined"
-          component="span">
-          6
-        </Button>
-        <Button
-          onClick={setLastIDNumber(7, 'vehicle', setCanVehicleGoOut)}
-          color="primary"
-          variant="outlined"
-          component="span">
-          7
-        </Button>
-        <Button
-          onClick={setLastIDNumber(8, 'vehicle', setCanVehicleGoOut)}
-          color="primary"
-          variant="outlined"
-          component="span">
-          8
-        </Button>
-        <Button
-          onClick={setLastIDNumber(9, 'vehicle', setCanVehicleGoOut)}
-          color="primary"
-          variant="outlined"
-          component="span">
-          9
-        </Button>
-        <Button
-          onClick={setLastIDNumber(0, 'vehicle', setCanVehicleGoOut)}
-          color="primary"
-          variant="outlined"
-          component="span">
-          0
-        </Button>
+        <p>Último número de tu placa</p>
+        {DIGITS.map((value, index) => (
+          <Button
+            key={index}
+            onClick={setLastIDNumber(value, 'vehicle', currentCity, {
+              day: setCanVehicleGoOutToday,
+              week: setCanVehicleGoOutWeek,
+            })}
+            color="primary"
+            variant="outlined"
+            component="span">
+            {value}
+          </Button>
+        ))}
       </div>
       <div className="card-stack">
         <CardComponent
-          canGoOut={canPersonGoOut}
+          canGoOut={canPersonGoOutToday}
           entity="person"
-          text={messageForToday(canPersonGoOut, 'person')}
+          text={messageForToday(canPersonGoOutToday, 'person')}
         />
         <CardComponent
-          canGoOut={canVehicleGoOut}
+          canGoOut={canVehicleGoOutToday}
           entity="vehicle"
-          text={messageForToday(canVehicleGoOut, 'vehicle')}
+          text={messageForToday(canVehicleGoOutToday, 'vehicle')}
         />
       </div>
-      {/* Estos json son para mostrar los datos planos porque me dio pereza organizarlos */}
+
       <div style={{ padding: '20px' }}>
-        {JSON.stringify(canGoOutWeek(0, 'person'))}
+        {data['person'][currentCity][getCurrentDate()] ? (
+          <span>
+            Hoy pueden salir en {currentCity} las personas cuyos números de cédula terminen en
+            {data['person'][currentCity][getCurrentDate()].reduce((a, v) => a + ' ' + v, '')}
+          </span>
+        ) : (
+          <span>No hay datos para pico y cédula en {currentCity} el día de hoy</span>
+        )}
       </div>
+
       <div style={{ padding: '20px' }}>
-        {JSON.stringify(canGoOutWeek(0, 'vehicle'))}
+        {data['vehicle'][currentCity][getCurrentDate()] ? (
+          <span>
+            Hoy pueden rodar en {currentCity} los vehículos cuyas placas terminen en
+            {data['vehicle'][currentCity][getCurrentDate()].reduce((a, v) => a + ' ' + v, '')}
+          </span>
+        ) : (
+          <span>No hay datos para pico y placa en {currentCity} el día de hoy</span>
+        )}
+      </div>
+
+      <div style={{ padding: '10px' }}>
+        <ul>
+          {canPersonGoOutWeek.map((day, key) => (
+            <li key={key}>
+              {day.day}: {day.canGoOut === 'YES' ? '' : 'NO'} puedes salir
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div style={{ padding: '10px' }}>
+        <ul>
+          {canVehicleGoOutWeek.map((day, key) => (
+            <li key={key}>
+              {day.day}: {day.canGoOut === 'YES' ? '' : 'NO'} puedes salir
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div className="issues" style={{ padding: '20px' }}>
+        <Button
+          color="secondary"
+          variant="contained"
+          component="span"
+          onClick={() => {
+            alert('Tú no quieres reportar un problema :3')
+          }}>
+          Reportar un problema
+        </Button>
+      </div>
+      <div className="source" style={{ padding: '20px' }}>
+        <a target="_blank" rel="noopener noreferrer" href={data.source[currentCity]}>
+          Fuente
+        </a>
       </div>
     </div>
   )
