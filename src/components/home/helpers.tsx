@@ -2,7 +2,8 @@ import { Day } from './home.types'
 
 export const getCurrentDate = (date: Date = new Date()): string => {
   const d = date || new Date()
-  const ts = (n: number): string => (n < 10 ? '0' + n : n >= 100 ? '' + (n - 2000) : '' + n)
+  const ts = (n: number): string =>
+    n < 10 ? '0' + n : n >= 100 ? '' + (n - 2000) : '' + n
   const strDate = `${ts(d.getFullYear())}/${ts(d.getMonth() + 1)}/${ts(d.getDate())}`
   return strDate
 }
