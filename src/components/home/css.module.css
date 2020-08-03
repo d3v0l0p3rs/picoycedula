@@ -1,0 +1,33 @@
+.citySelector{
+    padding: 20px;
+}
+
+.personMsgsContainer{
+    padding: 20px;
+}
+
+.personWeekMsgsContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 10px;
+}
+
+.vehicleMsgsContainer{
+    padding: 20px;
+}
+
+.vehicleWeekMsgsContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 10px;
+}
+
+.issuesSection{
+    padding: 20px;
+}
+
+.sourceSection{
+    padding: 20px;
+}

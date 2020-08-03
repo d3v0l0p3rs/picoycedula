@@ -7,6 +7,7 @@ import FormControl from '@material-ui/core/FormControl'
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
 import { CardComponent } from '../index'
+import styles from './css.module.css'
 
 const data = { person: pico_y_cedula, vehicle: pico_y_placa, source: source }
 
@@ -70,7 +71,8 @@ const HomeComponent: React.FC = (): JSX.Element => {
   const [canVehicleGoOutWeek, setCanVehicleGoOutWeek] = useState<GoOutWeekState>([])
   return (
     <div className="App">
-      <div className="city-selector" style={{ padding: '20px' }}>
+      <div className={styles.citySelector}>
+        <h2>Pico y Colombia</h2>
         <FormControl>
           <Select
             value={currentCity}
@@ -83,35 +85,11 @@ const HomeComponent: React.FC = (): JSX.Element => {
       </div>
       <div className="person-last-id-number">
         <p>Último número de tu cédula</p>
-        {DIGITS.map((value, index) => (
-          <Button
-            key={index}
-            onClick={setLastIDNumber(value, 'person', currentCity, {
-              day: setCanPersonGoOutToday,
-              week: setCanPersonGoOutWeek,
-            })}
-            color="primary"
-            variant="outlined"
-            component="span">
-            {value}
-          </Button>
-        ))}
+        {DIGITS.map((value, index) => renderPersonDigits(value, index))}
       </div>
       <div className="vehicle-last-id-number">
         <p>Último número de tu placa</p>
-        {DIGITS.map((value, index) => (
-          <Button
-            key={index}
-            onClick={setLastIDNumber(value, 'vehicle', currentCity, {
-              day: setCanVehicleGoOutToday,
-              week: setCanVehicleGoOutWeek,
-            })}
-            color="primary"
-            variant="outlined"
-            component="span">
-            {value}
-          </Button>
-        ))}
+        {DIGITS.map((value, index) => renderVehicleDigits(value, index))}
       </div>
       <div className="card-stack">
         <CardComponent
@@ -126,29 +104,29 @@ const HomeComponent: React.FC = (): JSX.Element => {
         />
       </div>
 
-      <div style={{ padding: '20px' }}>
+      <div className={styles.personMsgsContainer}>
         {data['person'][currentCity][getCurrentDate()] ? (
           <span>
             Hoy pueden salir en {currentCity} las personas cuyos números de cédula terminen en
             {data['person'][currentCity][getCurrentDate()].reduce((a, v) => a + ' ' + v, '')}
           </span>
         ) : (
-          <span>No hay datos para pico y cédula en {currentCity} el día de hoy</span>
-        )}
+            <span>No hay datos para pico y cédula en {currentCity} el día de hoy</span>
+          )}
       </div>
 
-      <div style={{ padding: '20px' }}>
+      <div className={styles.vehicleMsgsContainer}>
         {data['vehicle'][currentCity][getCurrentDate()] ? (
           <span>
             Hoy pueden rodar en {currentCity} los vehículos cuyas placas terminen en
             {data['vehicle'][currentCity][getCurrentDate()].reduce((a, v) => a + ' ' + v, '')}
           </span>
         ) : (
-          <span>No hay datos para pico y placa en {currentCity} el día de hoy</span>
-        )}
+            <span>No hay datos para pico y placa en {currentCity} el día de hoy</span>
+          )}
       </div>
 
-      <div style={{ padding: '10px' }}>
+      <div className={styles.personWeekMsgsContainer}>
         <ul>
           {canPersonGoOutWeek.map((day, key) => (
             <li key={key}>
@@ -157,7 +135,7 @@ const HomeComponent: React.FC = (): JSX.Element => {
           ))}
         </ul>
       </div>
-      <div style={{ padding: '10px' }}>
+      <div className={styles.vehicleWeekMsgsContainer}>
         <ul>
           {canVehicleGoOutWeek.map((day, key) => (
             <li key={key}>
@@ -166,7 +144,7 @@ const HomeComponent: React.FC = (): JSX.Element => {
           ))}
         </ul>
       </div>
-      <div className="issues" style={{ padding: '20px' }}>
+      <div className={styles.issuesSection}>
         <Button
           color="secondary"
           variant="contained"
@@ -177,13 +155,84 @@ const HomeComponent: React.FC = (): JSX.Element => {
           Reportar un problema
         </Button>
       </div>
-      <div className="source" style={{ padding: '20px' }}>
+      <div className={styles.sourceSection} >
         <a target="_blank" rel="noopener noreferrer" href={data.source[currentCity]}>
           Fuente
         </a>
       </div>
     </div>
   )
+
+  function renderPersonDigits(value: number, index: number) {
+    if (index % 3 === 0) {
+      return (
+        <>
+          <br />
+          <Button
+            key={index}
+            onClick={setLastIDNumber(value, 'person', currentCity, {
+              day: setCanPersonGoOutToday,
+              week: setCanPersonGoOutWeek,
+            })}
+            color="primary"
+            variant="outlined"
+            component="span">
+            {value}
+          </Button>
+        </>
+      )
+    } else {
+      return (
+        <Button
+          key={index}
+          onClick={setLastIDNumber(value, 'person', currentCity, {
+            day: setCanPersonGoOutToday,
+            week: setCanPersonGoOutWeek,
+          })}
+          color="primary"
+          variant="outlined"
+          component="span">
+          {value}
+        </Button>
+      )
+    }
+  }
+
+  function renderVehicleDigits(value: number, index: number) {
+    if (index % 3 === 0) {
+      return (
+        <>
+          <br />
+          <Button
+            key={index}
+            onClick={setLastIDNumber(value, 'vehicle', currentCity, {
+              day: setCanVehicleGoOutToday,
+              week: setCanVehicleGoOutWeek,
+            })}
+            color="primary"
+            variant="outlined"
+            component="span">
+            {value}
+          </Button>
+        </>
+      )
+    } else {
+      return (
+        <Button
+          key={index}
+          onClick={setLastIDNumber(value, 'vehicle', currentCity, {
+            day: setCanVehicleGoOutToday,
+            week: setCanVehicleGoOutWeek,
+          })}
+          color="primary"
+          variant="outlined"
+          component="span">
+          {value}
+        </Button>
+      )
+    }
+  }
+
 }
 
 export { HomeComponent }
