@@ -7,6 +7,7 @@ import FormControl from '@material-ui/core/FormControl'
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
 import { CardComponent } from '../index'
+import { getLabel, todayCanGoOutside, noDataToday, currentLastIDNumber } from '../../texts'
 import styles from './css.module.css'
 
 const data = { person: pico_y_cedula, vehicle: pico_y_placa, source: source }
@@ -16,11 +17,13 @@ const setLastIDNumber = (
   entity: Entity,
   city: City,
   callbacks: {
+    set: (lastIDNumber: number) => void
     day?: (canGoOut: GoOutState) => void
     week?: (goOutWeekState: GoOutWeekState) => void
   },
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
 ) => (_: unknown) => {
+  callbacks.set(lastIDNumber)
   if (callbacks.day) {
     callbacks.day(canGoOut(lastIDNumber, entity, city))
   }
@@ -65,14 +68,17 @@ const messageForToday = (state: GoOutState, entity: Entity): string => {
 
 const HomeComponent: React.FC = (): JSX.Element => {
   const [currentCity, setCurrentCity] = useState<City>('CALI')
+  const [personIDNumber, setPersonIDNumber] = useState<number | null>(null)
+  const [vehicleIDNumber, setVehicleIDNumber] = useState<number | null>(null)
   const [canPersonGoOutToday, setCanPersonGoOutToday] = useState<GoOutState>('UNDEFINED')
   const [canPersonGoOutWeek, setCanPersonGoOutWeek] = useState<GoOutWeekState>([])
   const [canVehicleGoOutToday, setCanVehicleGoOutToday] = useState<GoOutState>('UNDEFINED')
   const [canVehicleGoOutWeek, setCanVehicleGoOutWeek] = useState<GoOutWeekState>([])
   return (
     <div className="App">
+      <h2>Pico y Colombia</h2>
+
       <div className={styles.citySelector}>
-        <h2>Pico y Colombia</h2>
         <FormControl>
           <Select
             value={currentCity}
@@ -83,47 +89,83 @@ const HomeComponent: React.FC = (): JSX.Element => {
           </Select>
         </FormControl>
       </div>
-      <div className="person-last-id-number">
-        <p>Último número de tu cédula</p>
-        {DIGITS.map((value, index) => renderPersonDigits(value, index))}
-      </div>
-      <div className="vehicle-last-id-number">
-        <p>Último número de tu placa</p>
-        {DIGITS.map((value, index) => renderVehicleDigits(value, index))}
-      </div>
-      <div className="card-stack">
-        <CardComponent
-          canGoOut={canPersonGoOutToday}
-          entity="person"
-          text={messageForToday(canPersonGoOutToday, 'person')}
-        />
-        <CardComponent
-          canGoOut={canVehicleGoOutToday}
-          entity="vehicle"
-          text={messageForToday(canVehicleGoOutToday, 'vehicle')}
-        />
+
+      <div className="person">
+        {personIDNumber !== null ? (
+          <div>{currentLastIDNumber('person', personIDNumber)}</div>
+        ) : (
+          <label>{getLabel('pickLastCCNumber')}</label>
+        )}
+        {personIDNumber !== null ? (
+          <Button
+            onClick={() => {
+              setPersonIDNumber(null)
+              setCanPersonGoOutToday('UNDEFINED')
+              setCanPersonGoOutWeek([])
+            }}
+            color="secondary"
+            variant="outlined"
+            component="span">
+            {getLabel('pickAnotherLastNumber')}
+          </Button>
+        ) : (
+          DIGITS.map((value, index) => renderPersonDigits(value, index))
+        )}
+        <div>
+          <CardComponent
+            canGoOut={canPersonGoOutToday}
+            entity="person"
+            text={messageForToday(canPersonGoOutToday, 'person')}
+          />
+        </div>
+        <div className={styles.personMsgsContainer}>
+          {data['person'][currentCity][getCurrentDate()] ? (
+            <span>
+              {todayCanGoOutside('person', currentCity, data['person'][currentCity][getCurrentDate()])}
+            </span>
+          ) : (
+            <span>{noDataToday('person', currentCity)}</span>
+          )}
+        </div>
       </div>
 
-      <div className={styles.personMsgsContainer}>
-        {data['person'][currentCity][getCurrentDate()] ? (
-          <span>
-            Hoy pueden salir en {currentCity} las personas cuyos números de cédula terminen en
-            {data['person'][currentCity][getCurrentDate()].reduce((a, v) => a + ' ' + v, '')}
-          </span>
+      <div className="vehicle">
+        {vehicleIDNumber !== null ? (
+          <div>{currentLastIDNumber('vehicle', vehicleIDNumber)}</div>
         ) : (
-            <span>No hay datos para pico y cédula en {currentCity} el día de hoy</span>
-          )}
-      </div>
-
-      <div className={styles.vehicleMsgsContainer}>
-        {data['vehicle'][currentCity][getCurrentDate()] ? (
-          <span>
-            Hoy pueden rodar en {currentCity} los vehículos cuyas placas terminen en
-            {data['vehicle'][currentCity][getCurrentDate()].reduce((a, v) => a + ' ' + v, '')}
-          </span>
+          <label>{getLabel('pickLastCCNumber')}</label>
+        )}
+        {vehicleIDNumber !== null ? (
+          <Button
+            onClick={() => {
+              setVehicleIDNumber(null)
+              setCanVehicleGoOutToday('UNDEFINED')
+              setCanVehicleGoOutWeek([])
+            }}
+            color="secondary"
+            variant="outlined"
+            component="span">
+            {getLabel('pickAnotherLastNumber')}
+          </Button>
         ) : (
-            <span>No hay datos para pico y placa en {currentCity} el día de hoy</span>
+          DIGITS.map((value, index) => renderVehicleDigits(value, index))
+        )}
+        <div>
+          <CardComponent
+            canGoOut={canVehicleGoOutToday}
+            entity="vehicle"
+            text={messageForToday(canVehicleGoOutToday, 'vehicle')}
+          />
+        </div>
+        <div className={styles.vehicleMsgsContainer}>
+          {data['vehicle'][currentCity][getCurrentDate()] ? (
+            <span>
+              {todayCanGoOutside('vehicle', currentCity, data['vehicle'][currentCity][getCurrentDate()])}
+            </span>
+          ) : (
+            <span>{noDataToday('vehicle', currentCity)}</span>
           )}
+        </div>
       </div>
 
       <div className={styles.personWeekMsgsContainer}>
@@ -135,6 +177,7 @@ const HomeComponent: React.FC = (): JSX.Element => {
           ))}
         </ul>
       </div>
+
       <div className={styles.vehicleWeekMsgsContainer}>
         <ul>
           {canVehicleGoOutWeek.map((day, key) => (
@@ -144,6 +187,7 @@ const HomeComponent: React.FC = (): JSX.Element => {
           ))}
         </ul>
       </div>
+
       <div className={styles.issuesSection}>
         <Button
           color="secondary"
@@ -155,7 +199,8 @@ const HomeComponent: React.FC = (): JSX.Element => {
           Reportar un problema
         </Button>
       </div>
-      <div className={styles.sourceSection} >
+
+      <div className={styles.sourceSection}>
         <a target="_blank" rel="noopener noreferrer" href={data.source[currentCity]}>
           Fuente
         </a>
@@ -164,28 +209,13 @@ const HomeComponent: React.FC = (): JSX.Element => {
   )
 
   function renderPersonDigits(value: number, index: number) {
-    if (index % 3 === 0) {
-      return (
-        <>
-          <br />
-          <Button
-            key={index}
-            onClick={setLastIDNumber(value, 'person', currentCity, {
-              day: setCanPersonGoOutToday,
-              week: setCanPersonGoOutWeek,
-            })}
-            color="primary"
-            variant="outlined"
-            component="span">
-            {value}
-          </Button>
-        </>
-      )
-    } else {
-      return (
+    return (
+      <>
+        {index % 3 === 0 ? <br /> : ''}
         <Button
           key={index}
           onClick={setLastIDNumber(value, 'person', currentCity, {
+            set: setPersonIDNumber,
             day: setCanPersonGoOutToday,
             week: setCanPersonGoOutWeek,
           })}
@@ -194,33 +224,18 @@ const HomeComponent: React.FC = (): JSX.Element => {
           component="span">
           {value}
         </Button>
-      )
-    }
+      </>
+    )
   }
 
   function renderVehicleDigits(value: number, index: number) {
-    if (index % 3 === 0) {
-      return (
-        <>
-          <br />
-          <Button
-            key={index}
-            onClick={setLastIDNumber(value, 'vehicle', currentCity, {
-              day: setCanVehicleGoOutToday,
-              week: setCanVehicleGoOutWeek,
-            })}
-            color="primary"
-            variant="outlined"
-            component="span">
-            {value}
-          </Button>
-        </>
-      )
-    } else {
-      return (
+    return (
+      <>
+        {index % 3 === 0 ? <br /> : ''}
         <Button
           key={index}
           onClick={setLastIDNumber(value, 'vehicle', currentCity, {
+            set: setVehicleIDNumber,
             day: setCanVehicleGoOutToday,
             week: setCanVehicleGoOutWeek,
           })}
@@ -229,10 +244,9 @@ const HomeComponent: React.FC = (): JSX.Element => {
           component="span">
           {value}
         </Button>
-      )
-    }
+      </>
+    )
   }
-
 }
 
 export { HomeComponent }
