@@ -1,4 +1,4 @@
-import { Day } from './home.types'
+import { Day } from '../index.types'
 
 export const getCurrentDate = (date: Date = new Date()): string => {
   const d = date || new Date()

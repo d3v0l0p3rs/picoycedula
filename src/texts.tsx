@@ -1,10 +1,16 @@
-import { Entity, City } from 'components/index.types'
+import { Entity, City, GoOutState } from 'components/index.types'
 
 const labels: { [name: string]: string } = {
   title: 'Pico y Cédula',
   pickLastCCNumber: 'Seleccione el último dígito de su cédula',
   pickLastPlateNumber: 'Seleccione el último dígito de su placa',
   pickAnotherLastNumber: 'Escoger otro número',
+  canGoOut: 'Puedes salir',
+  canNotGoOut: 'NO puedes salir',
+  canDrive: 'Puedes manejar',
+  canNotDrive: 'NO puedes manejar',
+  reportIssue: 'Reportar un problema',
+  infoSource: 'Fuente',
   default: '¯\\_(ツ)_/¯',
 }
 
@@ -36,4 +42,20 @@ const currentLastIDNumber = (entity: Entity, lastIDNumber: number): string => {
   }[entity]
 }
 
-export { getLabel, todayCanGoOutside, noDataToday, currentLastIDNumber }
+const messageForToday = (state: GoOutState, entity: Entity): string => {
+  // Esto es solo para mostrar los datos y ya, se puede borrar eventualmente
+  return {
+    YES: { person: 'Puedes salir', vehicle: 'Puedes conducir' },
+    NO: { person: 'NO puedes salir', vehicle: 'NO puedes conducir' },
+    ERROR: {
+      person: 'No hay información del pico y cédula de hoy',
+      vehicle: 'No hay información del pico y placa de hoy',
+    },
+    UNDEFINED: {
+      person: 'No ha ingresado el último dígito de su cédula',
+      vehicle: 'No ha ingresado el último dígito de su placa',
+    },
+  }[state][entity]
+}
+
+export { getLabel, todayCanGoOutside, noDataToday, currentLastIDNumber, messageForToday }

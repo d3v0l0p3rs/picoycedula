@@ -1,16 +1,23 @@
 import React, { useState } from 'react'
-import { pico_y_cedula, pico_y_placa, source } from '../../data'
+import { pico_y_cedula, pico_y_placa, source, cities } from '../../data'
 import { Entity, GoOutState, GoOutWeekState, City } from '../index.types'
 import { getCurrentDate, getCurrentWeek, dayOfWeekString, DIGITS } from './helpers'
 import Button from '@material-ui/core/Button'
 import FormControl from '@material-ui/core/FormControl'
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
+import { Collapse } from '@material-ui/core'
 import { CardComponent } from '../index'
-import { getLabel, todayCanGoOutside, noDataToday, currentLastIDNumber } from '../../texts'
+import {
+  getLabel,
+  todayCanGoOutside,
+  noDataToday,
+  currentLastIDNumber,
+  messageForToday,
+} from '../../texts'
 import styles from './css.module.css'
 
-const data = { person: pico_y_cedula, vehicle: pico_y_placa, source: source }
+const data = { person: pico_y_cedula, vehicle: pico_y_placa }
 
 const setLastIDNumber = (
   lastIDNumber: number,
@@ -50,22 +57,6 @@ const canGoOutWeek = (lastIDNumber: number, entity: Entity, city: City): GoOutWe
   return result
 }
 
-const messageForToday = (state: GoOutState, entity: Entity): string => {
-  // Esto es solo para mostrar los datos y ya, se puede borrar eventualmente
-  return {
-    YES: { person: 'Puedes salir', vehicle: 'Puedes conducir' },
-    NO: { person: 'NO puedes salir', vehicle: 'NO puedes conducir' },
-    ERROR: {
-      person: 'No hay información del pico y cédula de hoy',
-      vehicle: 'No hay información del pico y placa de hoy',
-    },
-    UNDEFINED: {
-      person: 'No ha ingresado el último dígito de su cédula',
-      vehicle: 'No ha ingresado el último dígito de su placa',
-    },
-  }[state][entity]
-}
-
 const HomeComponent: React.FC = (): JSX.Element => {
   const [currentCity, setCurrentCity] = useState<City>('CALI')
   const [personIDNumber, setPersonIDNumber] = useState<number | null>(null)
@@ -74,9 +65,10 @@ const HomeComponent: React.FC = (): JSX.Element => {
   const [canPersonGoOutWeek, setCanPersonGoOutWeek] = useState<GoOutWeekState>([])
   const [canVehicleGoOutToday, setCanVehicleGoOutToday] = useState<GoOutState>('UNDEFINED')
   const [canVehicleGoOutWeek, setCanVehicleGoOutWeek] = useState<GoOutWeekState>([])
+
   return (
     <div className="App">
-      <h2>Pico y Colombia</h2>
+      <h2>{getLabel('title')}</h2>
 
       <div className={styles.citySelector}>
         <FormControl>
@@ -85,18 +77,23 @@ const HomeComponent: React.FC = (): JSX.Element => {
             onChange={e => {
               setCurrentCity(e.target.value as City)
             }}>
-            <MenuItem value={'CALI'}>Cali</MenuItem>
+            {Object.entries(cities).map(([key, value]) => (
+              <MenuItem key={key} value={key}>
+                {value}
+              </MenuItem>
+            ))}
           </Select>
         </FormControl>
       </div>
 
       <div className="person">
-        {personIDNumber !== null ? (
-          <div>{currentLastIDNumber('person', personIDNumber)}</div>
-        ) : (
+        <Collapse in={personIDNumber !== null}>
+          <div>{currentLastIDNumber('person', personIDNumber as number)}</div>
+        </Collapse>
+        <Collapse in={personIDNumber === null}>
           <label>{getLabel('pickLastCCNumber')}</label>
-        )}
-        {personIDNumber !== null ? (
+        </Collapse>
+        <Collapse in={personIDNumber !== null}>
           <Button
             onClick={() => {
               setPersonIDNumber(null)
@@ -108,9 +105,11 @@ const HomeComponent: React.FC = (): JSX.Element => {
             component="span">
             {getLabel('pickAnotherLastNumber')}
           </Button>
-        ) : (
-          DIGITS.map((value, index) => renderPersonDigits(value, index))
-        )}
+        </Collapse>
+        <Collapse in={personIDNumber === null}>
+          <>{DIGITS.map((value, index) => renderPersonDigits(value, index))}</>
+        </Collapse>
+
         <div>
           <CardComponent
             canGoOut={canPersonGoOutToday}
@@ -130,12 +129,13 @@ const HomeComponent: React.FC = (): JSX.Element => {
       </div>
 
       <div className="vehicle">
-        {vehicleIDNumber !== null ? (
-          <div>{currentLastIDNumber('vehicle', vehicleIDNumber)}</div>
-        ) : (
+        <Collapse in={vehicleIDNumber !== null}>
+          <div>{currentLastIDNumber('vehicle', vehicleIDNumber as number)}</div>
+        </Collapse>
+        <Collapse in={vehicleIDNumber === null}>
           <label>{getLabel('pickLastCCNumber')}</label>
-        )}
-        {vehicleIDNumber !== null ? (
+        </Collapse>
+        <Collapse in={vehicleIDNumber !== null}>
           <Button
             onClick={() => {
               setVehicleIDNumber(null)
@@ -147,9 +147,11 @@ const HomeComponent: React.FC = (): JSX.Element => {
             component="span">
             {getLabel('pickAnotherLastNumber')}
           </Button>
-        ) : (
-          DIGITS.map((value, index) => renderVehicleDigits(value, index))
-        )}
+        </Collapse>
+        <Collapse in={vehicleIDNumber === null}>
+          <>{DIGITS.map((value, index) => renderVehicleDigits(value, index))}</>
+        </Collapse>
+
         <div>
           <CardComponent
             canGoOut={canVehicleGoOutToday}
@@ -168,25 +170,29 @@ const HomeComponent: React.FC = (): JSX.Element => {
         </div>
       </div>
 
-      <div className={styles.personWeekMsgsContainer}>
-        <ul>
-          {canPersonGoOutWeek.map((day, key) => (
-            <li key={key}>
-              {day.day}: {day.canGoOut === 'YES' ? '' : 'NO'} puedes salir
-            </li>
-          ))}
-        </ul>
-      </div>
+      <Collapse in={canPersonGoOutWeek.length > 0}>
+        <div className={styles.personWeekMsgsContainer}>
+          <ul>
+            {canPersonGoOutWeek.map((day, key) => (
+              <li key={key}>
+                {day.day}: {day.canGoOut === 'YES' ? getLabel('canGoOut') : getLabel('canNotGoOut')}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </Collapse>
 
-      <div className={styles.vehicleWeekMsgsContainer}>
-        <ul>
-          {canVehicleGoOutWeek.map((day, key) => (
-            <li key={key}>
-              {day.day}: {day.canGoOut === 'YES' ? '' : 'NO'} puedes salir
-            </li>
-          ))}
-        </ul>
-      </div>
+      <Collapse in={canPersonGoOutWeek.length > 0}>
+        <div className={styles.vehicleWeekMsgsContainer}>
+          <ul>
+            {canVehicleGoOutWeek.map((day, key) => (
+              <li key={key}>
+                {day.day}: {day.canGoOut === 'YES' ? getLabel('canDrive') : getLabel('canNotDrive')}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </Collapse>
 
       <div className={styles.issuesSection}>
         <Button
@@ -196,13 +202,13 @@ const HomeComponent: React.FC = (): JSX.Element => {
           onClick={() => {
             alert('Tú no quieres reportar un problema :3')
           }}>
-          Reportar un problema
+          {getLabel('reportIssue')}
         </Button>
       </div>
 
       <div className={styles.sourceSection}>
-        <a target="_blank" rel="noopener noreferrer" href={data.source[currentCity]}>
-          Fuente
+        <a target="_blank" rel="noopener noreferrer" href={source[currentCity]}>
+          {getLabel('infoSource')}
         </a>
       </div>
     </div>

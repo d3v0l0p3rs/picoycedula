@@ -1,5 +1,9 @@
 export type City = 'CALI'
 
+export const cities: { [city in City]: string } = {
+  CALI: 'Cali',
+}
+
 export const pico_y_cedula: { [city in City]: { [date: string]: number[] } } = {
   CALI: {
     '20/08/01': [1, 3, 5, 7, 9],
