@@ -46,14 +46,14 @@ const messageForToday = (state: GoOutState, entity: Entity): string => {
   // Esto es solo para mostrar los datos y ya, se puede borrar eventualmente
   return {
     YES: { person: 'Puedes salir', vehicle: 'Puedes conducir' },
-    NO: { person: 'NO puedes salir', vehicle: 'NO puedes conducir' },
+    NO: { person: 'Quédate en casa', vehicle: 'NO puedes conducir' },
     ERROR: {
-      person: 'No hay información del pico y cédula de hoy',
-      vehicle: 'No hay información del pico y placa de hoy',
+      person: 'No encontramos información actual',
+      vehicle: 'No encontramos información actual',
     },
     UNDEFINED: {
-      person: 'No ha ingresado el último dígito de su cédula',
-      vehicle: 'No ha ingresado el último dígito de su placa',
+      person: 'Seleccione un dígito',
+      vehicle: 'Seleccione un dígito',
     },
   }[state][entity]
 }

@@ -10,7 +10,7 @@ import DriveEta from '@material-ui/icons/DriveEta'
 import Error from '@material-ui/icons/Error'
 import Home from '@material-ui/icons/Home'
 import Block from '@material-ui/icons/Block'
-import PregnantWoman from '@material-ui/icons/PregnantWoman'
+import Dialpad from '@material-ui/icons/Dialpad'
 
 const cardStyle = (canGoOut: GoOutState) => {
   const color = {
@@ -41,8 +41,8 @@ const cardIcon = (canGoOut: GoOutState, entity: Entity) => {
     NO: { person: <Home style={style} />, vehicle: <Block style={style} /> },
     ERROR: { person: <Error style={style} />, vehicle: <Error style={style} /> },
     UNDEFINED: {
-      person: <PregnantWoman style={style} />,
-      vehicle: <PregnantWoman style={style} />,
+      person: <Dialpad style={style} />,
+      vehicle: <Dialpad style={style} />,
     },
   }[canGoOut][entity]
 }

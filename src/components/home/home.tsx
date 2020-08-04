@@ -15,7 +15,7 @@ import {
   currentLastIDNumber,
   messageForToday,
 } from '../../texts'
-import styles from './css.module.css'
+import styles from './scss.module.scss'
 
 const data = { person: pico_y_cedula, vehicle: pico_y_placa }
 
@@ -220,6 +220,7 @@ const HomeComponent: React.FC = (): JSX.Element => {
         {index % 3 === 0 ? <br /> : ''}
         <Button
           key={index}
+          className={styles.digitButtom}
           onClick={setLastIDNumber(value, 'person', currentCity, {
             set: setPersonIDNumber,
             day: setCanPersonGoOutToday,
@@ -240,6 +241,7 @@ const HomeComponent: React.FC = (): JSX.Element => {
         {index % 3 === 0 ? <br /> : ''}
         <Button
           key={index}
+          className={styles.digitButtom}
           onClick={setLastIDNumber(value, 'vehicle', currentCity, {
             set: setVehicleIDNumber,
             day: setCanVehicleGoOutToday,
