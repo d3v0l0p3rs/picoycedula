@@ -16,6 +16,7 @@ import {
   messageForToday,
 } from '../../texts'
 import styles from './scss.module.scss'
+import Grid from '@material-ui/core/Grid';
 
 const data = { person: pico_y_cedula, vehicle: pico_y_placa }
 
@@ -71,14 +72,15 @@ const HomeComponent: React.FC = (): JSX.Element => {
       <h2>{getLabel('title')}</h2>
 
       <div className={styles.citySelector}>
-        <FormControl>
+        <FormControl >
           <Select
             value={currentCity}
             onChange={e => {
               setCurrentCity(e.target.value as City)
-            }}>
+            }}
+            className={styles.selectedCity}>
             {Object.entries(cities).map(([key, value]) => (
-              <MenuItem key={key} value={key}>
+              <MenuItem key={key} value={key} className={styles.cityContainer}>
                 {value}
               </MenuItem>
             ))}
@@ -86,113 +88,126 @@ const HomeComponent: React.FC = (): JSX.Element => {
         </FormControl>
       </div>
 
-      <div className="person">
-        <Collapse in={personIDNumber !== null}>
-          <div>{currentLastIDNumber('person', personIDNumber as number)}</div>
-        </Collapse>
-        <Collapse in={personIDNumber === null}>
-          <label>{getLabel('pickLastCCNumber')}</label>
-        </Collapse>
-        <Collapse in={personIDNumber !== null}>
-          <Button
-            onClick={() => {
-              setPersonIDNumber(null)
-              setCanPersonGoOutToday('UNDEFINED')
-              setCanPersonGoOutWeek([])
-            }}
-            color="secondary"
-            variant="outlined"
-            component="span">
-            {getLabel('pickAnotherLastNumber')}
-          </Button>
-        </Collapse>
-        <Collapse in={personIDNumber === null}>
-          <>{DIGITS.map((value, index) => renderPersonDigits(value, index))}</>
-        </Collapse>
+      <Grid container spacing={0}>
 
-        <div>
-          <CardComponent
-            canGoOut={canPersonGoOutToday}
-            entity="person"
-            text={messageForToday(canPersonGoOutToday, 'person')}
-          />
-        </div>
-        <div className={styles.personMsgsContainer}>
-          {data['person'][currentCity][getCurrentDate()] ? (
-            <span>
-              {todayCanGoOutside('person', currentCity, data['person'][currentCity][getCurrentDate()])}
-            </span>
-          ) : (
-            <span>{noDataToday('person', currentCity)}</span>
-          )}
-        </div>
-      </div>
+        <Grid item xs={12} sm={12} md={6} lg={6} >
+          <div className="person">
+            <Collapse in={personIDNumber !== null}>
+              <div>{currentLastIDNumber('person', personIDNumber as number)}</div>
+            </Collapse>
+            <Collapse in={personIDNumber === null}>
+              <label>{getLabel('pickLastCCNumber')}</label>
+            </Collapse>
+            <Collapse in={personIDNumber !== null}>
+              <Button
+                onClick={() => {
+                  setPersonIDNumber(null)
+                  setCanPersonGoOutToday('UNDEFINED')
+                  setCanPersonGoOutWeek([])
+                }}
+                className={styles.selectOtherDigitButton}
+                variant="outlined"
+                component="span">
+                {getLabel('pickAnotherLastNumber')}
+              </Button>
+            </Collapse>
+            <Collapse in={personIDNumber === null}>
+              <>{DIGITS.map((value, index) => renderPersonDigits(value, index))}</>
+            </Collapse>
 
-      <div className="vehicle">
-        <Collapse in={vehicleIDNumber !== null}>
-          <div>{currentLastIDNumber('vehicle', vehicleIDNumber as number)}</div>
-        </Collapse>
-        <Collapse in={vehicleIDNumber === null}>
-          <label>{getLabel('pickLastCCNumber')}</label>
-        </Collapse>
-        <Collapse in={vehicleIDNumber !== null}>
-          <Button
-            onClick={() => {
-              setVehicleIDNumber(null)
-              setCanVehicleGoOutToday('UNDEFINED')
-              setCanVehicleGoOutWeek([])
-            }}
-            color="secondary"
-            variant="outlined"
-            component="span">
-            {getLabel('pickAnotherLastNumber')}
-          </Button>
-        </Collapse>
-        <Collapse in={vehicleIDNumber === null}>
-          <>{DIGITS.map((value, index) => renderVehicleDigits(value, index))}</>
-        </Collapse>
+            <div>
+              <CardComponent
+                canGoOut={canPersonGoOutToday}
+                entity="person"
+                text={messageForToday(canPersonGoOutToday, 'person')}
+              />
+            </div>
+            <div className={styles.personMsgsContainer}>
+              {data['person'][currentCity][getCurrentDate()] ? (
+                <span>
+                  {todayCanGoOutside('person', currentCity, data['person'][currentCity][getCurrentDate()])}
+                </span>
+              ) : (
+                  <span>{noDataToday('person', currentCity)}</span>
+                )}
+            </div>
+          </div>
 
-        <div>
-          <CardComponent
-            canGoOut={canVehicleGoOutToday}
-            entity="vehicle"
-            text={messageForToday(canVehicleGoOutToday, 'vehicle')}
-          />
-        </div>
-        <div className={styles.vehicleMsgsContainer}>
-          {data['vehicle'][currentCity][getCurrentDate()] ? (
-            <span>
-              {todayCanGoOutside('vehicle', currentCity, data['vehicle'][currentCity][getCurrentDate()])}
-            </span>
-          ) : (
-            <span>{noDataToday('vehicle', currentCity)}</span>
-          )}
-        </div>
-      </div>
+          <Collapse in={canPersonGoOutWeek.length > 0}>
+            <div className={styles.personWeekMsgsContainer}>
+              <ul>
+                {canPersonGoOutWeek.map((day, key) => (
+                  <li key={key}>
+                    {day.day}: {day.canGoOut === 'YES' ? getLabel('canGoOut') : getLabel('canNotGoOut')}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </Collapse>
 
-      <Collapse in={canPersonGoOutWeek.length > 0}>
-        <div className={styles.personWeekMsgsContainer}>
-          <ul>
-            {canPersonGoOutWeek.map((day, key) => (
-              <li key={key}>
-                {day.day}: {day.canGoOut === 'YES' ? getLabel('canGoOut') : getLabel('canNotGoOut')}
-              </li>
-            ))}
-          </ul>
-        </div>
-      </Collapse>
+        </Grid>
 
-      <Collapse in={canPersonGoOutWeek.length > 0}>
-        <div className={styles.vehicleWeekMsgsContainer}>
-          <ul>
-            {canVehicleGoOutWeek.map((day, key) => (
-              <li key={key}>
-                {day.day}: {day.canGoOut === 'YES' ? getLabel('canDrive') : getLabel('canNotDrive')}
-              </li>
-            ))}
-          </ul>
-        </div>
-      </Collapse>
+        <Grid item xs={12} sm={12} md={6} lg={6}>
+          <div className="vehicle">
+            <Collapse in={vehicleIDNumber !== null}>
+              <div>{currentLastIDNumber('vehicle', vehicleIDNumber as number)}</div>
+            </Collapse>
+            <Collapse in={vehicleIDNumber === null}>
+              <label>{getLabel('pickLastPlateNumber')}</label>
+            </Collapse>
+            <Collapse in={vehicleIDNumber !== null}>
+              <Button
+                onClick={() => {
+                  setVehicleIDNumber(null)
+                  setCanVehicleGoOutToday('UNDEFINED')
+                  setCanVehicleGoOutWeek([])
+                }}
+
+                variant="outlined"
+                className={styles.selectOtherDigitButton}
+                component="span">
+                {getLabel('pickAnotherLastNumber')}
+              </Button>
+            </Collapse>
+            <Collapse in={vehicleIDNumber === null}>
+              <>{DIGITS.map((value, index) => renderVehicleDigits(value, index))}</>
+            </Collapse>
+
+            <div>
+              <CardComponent
+                canGoOut={canVehicleGoOutToday}
+                entity="vehicle"
+                text={messageForToday(canVehicleGoOutToday, 'vehicle')}
+              />
+            </div>
+            <div className={styles.vehicleMsgsContainer}>
+              {data['vehicle'][currentCity][getCurrentDate()] ? (
+                <span>
+                  {todayCanGoOutside('vehicle', currentCity, data['vehicle'][currentCity][getCurrentDate()])}
+                </span>
+              ) : (
+                  <span>{noDataToday('vehicle', currentCity)}</span>
+                )}
+            </div>
+          </div>
+
+          <Collapse in={canPersonGoOutWeek.length > 0}>
+            <div className={styles.vehicleWeekMsgsContainer}>
+              <ul>
+                {canVehicleGoOutWeek.map((day, key) => (
+                  <li key={key}>
+                    {day.day}: {day.canGoOut === 'YES' ? getLabel('canDrive') : getLabel('canNotDrive')}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </Collapse>
+
+        </Grid>
+
+      </Grid>
+
+
 
       <div className={styles.issuesSection}>
         <Button
@@ -207,7 +222,7 @@ const HomeComponent: React.FC = (): JSX.Element => {
       </div>
 
       <div className={styles.sourceSection}>
-        <a target="_blank" rel="noopener noreferrer" href={source[currentCity]}>
+        <a target="_blank" rel="noopener noreferrer" href={source[currentCity]} className={styles.sourceInfo}>
           {getLabel('infoSource')}
         </a>
       </div>
@@ -220,7 +235,7 @@ const HomeComponent: React.FC = (): JSX.Element => {
         {index % 3 === 0 ? <br /> : ''}
         <Button
           key={index}
-          className={styles.digitButtom}
+          className={styles.digitButton}
           onClick={setLastIDNumber(value, 'person', currentCity, {
             set: setPersonIDNumber,
             day: setCanPersonGoOutToday,
@@ -241,7 +256,7 @@ const HomeComponent: React.FC = (): JSX.Element => {
         {index % 3 === 0 ? <br /> : ''}
         <Button
           key={index}
-          className={styles.digitButtom}
+          className={styles.digitButton}
           onClick={setLastIDNumber(value, 'vehicle', currentCity, {
             set: setVehicleIDNumber,
             day: setCanVehicleGoOutToday,

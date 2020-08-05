@@ -5,22 +5,21 @@ import Card from '@material-ui/core/Card'
 import CardActionArea from '@material-ui/core/CardActionArea'
 import CardContent from '@material-ui/core/CardContent'
 import Typography from '@material-ui/core/Typography'
-import DirectionRun from '@material-ui/icons/DirectionsRun'
-import DriveEta from '@material-ui/icons/DriveEta'
-import Error from '@material-ui/icons/Error'
-import Home from '@material-ui/icons/Home'
 import Block from '@material-ui/icons/Block'
-import Dialpad from '@material-ui/icons/Dialpad'
+import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline'
+import ReportProblemOutlinedIcon from '@material-ui/icons/ReportProblemOutlined'
+import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline'
 
 const cardStyle = (canGoOut: GoOutState) => {
-  const color = {
-    YES: 'green',
-    NO: 'red',
-    ERROR: 'yellow',
-    UNDEFINED: 'gray',
+  const border = {
+    YES: '3px solid green',
+    NO: '3px solid red',
+    ERROR: '3px solid yellow',
+    UNDEFINED: '3px solid gray',
   }
   return {
-    backgroundColor: color[canGoOut],
+    backgroundColor: "white",
+    border: border[canGoOut],
     display: 'inline-block',
     margin: '20px 40px',
     height: '150px',
@@ -35,14 +34,14 @@ const cardIcon = (canGoOut: GoOutState, entity: Entity) => {
   const style = { fontSize: '80px' }
   return {
     YES: {
-      person: <DirectionRun style={style} />,
-      vehicle: <DriveEta style={style} />,
+      person: <CheckCircleOutlineIcon style={style} />,
+      vehicle: <CheckCircleOutlineIcon style={style} />,
     },
-    NO: { person: <Home style={style} />, vehicle: <Block style={style} /> },
-    ERROR: { person: <Error style={style} />, vehicle: <Error style={style} /> },
+    NO: { person: <ReportProblemOutlinedIcon style={style} />, vehicle: <Block style={style} /> },
+    ERROR: { person: <ReportProblemOutlinedIcon style={style} />, vehicle: <ErrorOutlineIcon style={style} /> },
     UNDEFINED: {
-      person: <Dialpad style={style} />,
-      vehicle: <Dialpad style={style} />,
+      person: <ErrorOutlineIcon style={style} />,
+      vehicle: <ErrorOutlineIcon style={style} />,
     },
   }[canGoOut][entity]
 }
@@ -50,7 +49,7 @@ const cardIcon = (canGoOut: GoOutState, entity: Entity) => {
 const CardComponent: React.FC<Props> = (props: Props): JSX.Element => {
   return (
     <Card style={cardStyle(props.canGoOut)}>
-      <CardActionArea>
+      <CardActionArea style={{ height: "100%" }}>
         {cardIcon(props.canGoOut, props.entity)}
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">

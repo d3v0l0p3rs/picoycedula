@@ -4,7 +4,7 @@ const labels: { [name: string]: string } = {
   title: 'Pico y Cédula',
   pickLastCCNumber: 'Seleccione el último dígito de su cédula',
   pickLastPlateNumber: 'Seleccione el último dígito de su placa',
-  pickAnotherLastNumber: 'Escoger otro número',
+  pickAnotherLastNumber: 'Seleccione otro dígito',
   canGoOut: 'Puedes salir',
   canNotGoOut: 'NO puedes salir',
   canDrive: 'Puedes manejar',
@@ -37,8 +37,8 @@ const noDataToday = (entity: Entity, city: City): string => {
 
 const currentLastIDNumber = (entity: Entity, lastIDNumber: number): string => {
   return {
-    person: `El último número de su cédula es ${lastIDNumber}`,
-    vehicle: `El último número de su placa es ${lastIDNumber}`,
+    person: `El último dígito de su cédula es ${lastIDNumber}`,
+    vehicle: `El último dígito de su placa es ${lastIDNumber}`,
   }[entity]
 }
 
