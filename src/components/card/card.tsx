@@ -18,7 +18,7 @@ const cardStyle = (canGoOut: GoOutState) => {
     UNDEFINED: '3px solid gray',
   }
   return {
-    backgroundColor: "white",
+    backgroundColor: 'white',
     border: border[canGoOut],
     display: 'inline-block',
     margin: '20px 40px',
@@ -38,7 +38,10 @@ const cardIcon = (canGoOut: GoOutState, entity: Entity) => {
       vehicle: <CheckCircleOutlineIcon style={style} />,
     },
     NO: { person: <ReportProblemOutlinedIcon style={style} />, vehicle: <Block style={style} /> },
-    ERROR: { person: <ReportProblemOutlinedIcon style={style} />, vehicle: <ErrorOutlineIcon style={style} /> },
+    ERROR: {
+      person: <ReportProblemOutlinedIcon style={style} />,
+      vehicle: <ErrorOutlineIcon style={style} />,
+    },
     UNDEFINED: {
       person: <ErrorOutlineIcon style={style} />,
       vehicle: <ErrorOutlineIcon style={style} />,
@@ -49,7 +52,7 @@ const cardIcon = (canGoOut: GoOutState, entity: Entity) => {
 const CardComponent: React.FC<Props> = (props: Props): JSX.Element => {
   return (
     <Card style={cardStyle(props.canGoOut)}>
-      <CardActionArea style={{ height: "100%" }}>
+      <CardActionArea style={{ height: '100%' }}>
         {cardIcon(props.canGoOut, props.entity)}
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">

@@ -16,7 +16,7 @@ import {
   messageForToday,
 } from '../../texts'
 import styles from './scss.module.scss'
-import Grid from '@material-ui/core/Grid';
+import Grid from '@material-ui/core/Grid'
 
 const data = { person: pico_y_cedula, vehicle: pico_y_placa }
 
@@ -72,7 +72,7 @@ const HomeComponent: React.FC = (): JSX.Element => {
       <h2>{getLabel('title')}</h2>
 
       <div className={styles.citySelector}>
-        <FormControl >
+        <FormControl>
           <Select
             value={currentCity}
             onChange={e => {
@@ -89,8 +89,7 @@ const HomeComponent: React.FC = (): JSX.Element => {
       </div>
 
       <Grid container spacing={0}>
-
-        <Grid item xs={12} sm={12} md={6} lg={6} >
+        <Grid item xs={12} sm={12} md={6} lg={6}>
           <div className="person">
             <Collapse in={personIDNumber !== null}>
               <div>{currentLastIDNumber('person', personIDNumber as number)}</div>
@@ -125,11 +124,15 @@ const HomeComponent: React.FC = (): JSX.Element => {
             <div className={styles.personMsgsContainer}>
               {data['person'][currentCity][getCurrentDate()] ? (
                 <span>
-                  {todayCanGoOutside('person', currentCity, data['person'][currentCity][getCurrentDate()])}
+                  {todayCanGoOutside(
+                    'person',
+                    currentCity,
+                    data['person'][currentCity][getCurrentDate()],
+                  )}
                 </span>
               ) : (
-                  <span>{noDataToday('person', currentCity)}</span>
-                )}
+                <span>{noDataToday('person', currentCity)}</span>
+              )}
             </div>
           </div>
 
@@ -144,7 +147,6 @@ const HomeComponent: React.FC = (): JSX.Element => {
               </ul>
             </div>
           </Collapse>
-
         </Grid>
 
         <Grid item xs={12} sm={12} md={6} lg={6}>
@@ -162,7 +164,6 @@ const HomeComponent: React.FC = (): JSX.Element => {
                   setCanVehicleGoOutToday('UNDEFINED')
                   setCanVehicleGoOutWeek([])
                 }}
-
                 variant="outlined"
                 className={styles.selectOtherDigitButton}
                 component="span">
@@ -183,11 +184,15 @@ const HomeComponent: React.FC = (): JSX.Element => {
             <div className={styles.vehicleMsgsContainer}>
               {data['vehicle'][currentCity][getCurrentDate()] ? (
                 <span>
-                  {todayCanGoOutside('vehicle', currentCity, data['vehicle'][currentCity][getCurrentDate()])}
+                  {todayCanGoOutside(
+                    'vehicle',
+                    currentCity,
+                    data['vehicle'][currentCity][getCurrentDate()],
+                  )}
                 </span>
               ) : (
-                  <span>{noDataToday('vehicle', currentCity)}</span>
-                )}
+                <span>{noDataToday('vehicle', currentCity)}</span>
+              )}
             </div>
           </div>
 
@@ -202,12 +207,8 @@ const HomeComponent: React.FC = (): JSX.Element => {
               </ul>
             </div>
           </Collapse>
-
         </Grid>
-
       </Grid>
-
-
 
       <div className={styles.issuesSection}>
         <Button
@@ -222,7 +223,11 @@ const HomeComponent: React.FC = (): JSX.Element => {
       </div>
 
       <div className={styles.sourceSection}>
-        <a target="_blank" rel="noopener noreferrer" href={source[currentCity]} className={styles.sourceInfo}>
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          href={source[currentCity]}
+          className={styles.sourceInfo}>
           {getLabel('infoSource')}
         </a>
       </div>
