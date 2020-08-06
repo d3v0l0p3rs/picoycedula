@@ -3,19 +3,18 @@ import { pico_y_cedula, pico_y_placa, source, cities } from '../../data'
 import { Entity, GoOutState, GoOutWeekState, City } from '../index.types'
 import { getCurrentDate, getCurrentWeek, dayOfWeekString, DIGITS } from './helpers'
 import Button from '@material-ui/core/Button'
-import FormControl from '@material-ui/core/FormControl'
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
+import ButtonGroup from '@material-ui/core/ButtonGroup'
+import AppBar from '@material-ui/core/AppBar'
+import Toolbar from '@material-ui/core/Toolbar'
+import Typography from '@material-ui/core/Typography'
+import Divider from '@material-ui/core/Divider'
 import { Collapse } from '@material-ui/core'
 import { CardComponent } from '../index'
-import {
-  getLabel,
-  todayCanGoOutside,
-  noDataToday,
-  currentLastIDNumber,
-  messageForToday,
-} from '../../texts'
+import { getLabel, todayCanGoOutside, noDataToday, messageForToday } from '../../texts'
 import styles from './scss.module.scss'
+import { icon } from '../card/helper'
 import Grid from '@material-ui/core/Grid'
 
 const data = { person: pico_y_cedula, vehicle: pico_y_placa }
@@ -53,6 +52,7 @@ const canGoOutWeek = (lastIDNumber: number, entity: Entity, city: City): GoOutWe
     result.push({
       canGoOut: canGoOut(lastIDNumber, entity, city, date),
       day: dayOfWeekString[i],
+      date: date,
     })
   })
   return result
@@ -69,12 +69,12 @@ const HomeComponent: React.FC = (): JSX.Element => {
 
   return (
     <div className="App">
-      <h2>{getLabel('title')}</h2>
-
-      <div className={styles.citySelector}>
-        <FormControl>
+      <AppBar position="sticky">
+        <Toolbar>
+          <Typography variant="h5">{getLabel('title')}</Typography>
           <Select
             value={currentCity}
+            style={{ marginLeft: 'auto' }}
             onChange={e => {
               setCurrentCity(e.target.value as City)
             }}
@@ -85,15 +85,21 @@ const HomeComponent: React.FC = (): JSX.Element => {
               </MenuItem>
             ))}
           </Select>
-        </FormControl>
-      </div>
+        </Toolbar>
+        <Typography
+          variant="subtitle1"
+          style={{ width: 'fit-content', paddingLeft: '20px', lineHeight: '20px' }}>
+          <Collapse in={personIDNumber !== null || personIDNumber !== null}>
+            {personIDNumber ? 'Cédula: ########' + personIDNumber : ''}
+            {personIDNumber !== null && vehicleIDNumber !== null ? ' | ' : ''}
+            {vehicleIDNumber ? 'Placa: ###-##' + vehicleIDNumber : ''}
+          </Collapse>
+        </Typography>
+      </AppBar>
 
-      <Grid container spacing={0}>
+      <Grid container spacing={0} style={{ paddingTop: '25px' }}>
         <Grid item xs={12} sm={12} md={6} lg={6}>
           <div className="person">
-            <Collapse in={personIDNumber !== null}>
-              <div>{currentLastIDNumber('person', personIDNumber as number)}</div>
-            </Collapse>
             <Collapse in={personIDNumber === null}>
               <label>{getLabel('pickLastCCNumber')}</label>
             </Collapse>
@@ -122,38 +128,33 @@ const HomeComponent: React.FC = (): JSX.Element => {
               />
             </div>
             <div className={styles.personMsgsContainer}>
-              {data['person'][currentCity][getCurrentDate()] ? (
-                <span>
-                  {todayCanGoOutside(
-                    'person',
-                    currentCity,
-                    data['person'][currentCity][getCurrentDate()],
-                  )}
-                </span>
-              ) : (
-                <span>{noDataToday('person', currentCity)}</span>
-              )}
+              <div>Hoy salen las cédulas terminadas en</div>
+              <ButtonGroup color="primary" variant="text" size="large">
+                {data['person'][currentCity][getCurrentDate()].map((v, k) => (
+                  <Button style={{ display: 'block' }} key={k}>
+                    {v}
+                  </Button>
+                ))}
+              </ButtonGroup>
             </div>
           </div>
 
           <Collapse in={canPersonGoOutWeek.length > 0}>
             <div className={styles.personWeekMsgsContainer}>
-              <ul>
-                {canPersonGoOutWeek.map((day, key) => (
-                  <li key={key}>
-                    {day.day}: {day.canGoOut === 'YES' ? getLabel('canGoOut') : getLabel('canNotGoOut')}
-                  </li>
+              <ButtonGroup color="primary" variant="text" size="small" style={{ width: '350px' }}>
+                {canPersonGoOutWeek.map((v, k) => (
+                  <Button style={{ display: 'block' }} key={k}>
+                    {v.day.slice(0, 3)} {v.date.slice(3)} {icon(v.canGoOut, 'person')}
+                  </Button>
                 ))}
-              </ul>
+              </ButtonGroup>
             </div>
           </Collapse>
+          <Divider variant="middle" />
         </Grid>
 
         <Grid item xs={12} sm={12} md={6} lg={6}>
           <div className="vehicle">
-            <Collapse in={vehicleIDNumber !== null}>
-              <div>{currentLastIDNumber('vehicle', vehicleIDNumber as number)}</div>
-            </Collapse>
             <Collapse in={vehicleIDNumber === null}>
               <label>{getLabel('pickLastPlateNumber')}</label>
             </Collapse>
@@ -198,15 +199,16 @@ const HomeComponent: React.FC = (): JSX.Element => {
 
           <Collapse in={canPersonGoOutWeek.length > 0}>
             <div className={styles.vehicleWeekMsgsContainer}>
-              <ul>
-                {canVehicleGoOutWeek.map((day, key) => (
-                  <li key={key}>
-                    {day.day}: {day.canGoOut === 'YES' ? getLabel('canDrive') : getLabel('canNotDrive')}
-                  </li>
+              <ButtonGroup color="primary" variant="text" size="small" style={{ width: '350px' }}>
+                {canVehicleGoOutWeek.map((v, k) => (
+                  <Button style={{ display: 'block' }} key={k}>
+                    {v.day.slice(0, 3)} {v.date.slice(3)} {icon(v.canGoOut, 'vehicle')}
+                  </Button>
                 ))}
-              </ul>
+              </ButtonGroup>
             </div>
           </Collapse>
+          <Divider variant="middle" classes={{ root: 'white' }} />
         </Grid>
       </Grid>
 

@@ -9,4 +9,4 @@ export type Day =
   | 'Viernes'
   | 'Sábado'
   | 'Domingo'
-export type GoOutWeekState = { canGoOut: GoOutState; day: Day }[]
+export type GoOutWeekState = { canGoOut: GoOutState; day: Day; date: string }[]
