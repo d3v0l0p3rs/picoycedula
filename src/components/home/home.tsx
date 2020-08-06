@@ -47,13 +47,15 @@ const canGoOut = (lastIDNumber: number, entity: Entity, city: City, date = ''): 
 
 const canGoOutWeek = (lastIDNumber: number, entity: Entity, city: City): GoOutWeekState => {
   const currentWeek = getCurrentWeek()
+  let currentDay = new Date().getDay()
   const result: GoOutWeekState = []
-  currentWeek.forEach((date, i) => {
+  currentWeek.forEach(date => {
     result.push({
       canGoOut: canGoOut(lastIDNumber, entity, city, date),
-      day: dayOfWeekString[i],
+      day: dayOfWeekString[currentDay % 7],
       date: date,
     })
+    currentDay = currentDay + 1
   })
   return result
 }

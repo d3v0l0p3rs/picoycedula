@@ -9,7 +9,7 @@ export const getCurrentDate = (date: Date = new Date()): string => {
 
 export const getCurrentWeek = (): string[] => {
   const d = new Date()
-  const w0 = d.getDate() - d.getDay()
+  const w0 = d.getDate()
   const dates: string[] = []
   for (let i = 0; i <= 6; i++) {
     dates.push(getCurrentDate(new Date(d.setDate(w0 + i))))
