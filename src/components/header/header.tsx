@@ -1,8 +1,8 @@
 import React from 'react'
-import { City } from '../index.types'
+import { City } from 'components/index.types'
 import { Props } from './header.types'
-import { cities } from '../../data'
-import { getLabel } from '../../texts'
+import { cities } from 'data'
+import { getLabel } from 'texts'
 import { Collapse } from '@material-ui/core'
 import styles from './scss.module.scss'
 import Select from '@material-ui/core/Select'
@@ -53,14 +53,14 @@ const HeaderComponent: React.FC<Props> = (props: Props): JSX.Element => {
         </Select>
       </Toolbar>
 
-      <Collapse in={props.personIDNumber !== null || props.personIDNumber !== null}>
+      <Collapse in={props.personIDNumber !== null || props.vehicleIDNumber !== null}>
         <Typography
           variant="subtitle1"
           color="textSecondary"
           style={{ width: 'fit-content', paddingLeft: '20px', lineHeight: '20px' }}>
-          {props.personIDNumber ? 'Cédula: ########' + props.personIDNumber : ''}
+          {props.personIDNumber !== null ? 'Cédula: ########' + props.personIDNumber : ''}
           {props.personIDNumber !== null && props.vehicleIDNumber !== null ? ' | ' : ''}
-          {props.vehicleIDNumber ? 'Placa: ###-##' + props.vehicleIDNumber : ''}
+          {props.vehicleIDNumber !== null ? 'Placa: ###-##' + props.vehicleIDNumber : ''}
         </Typography>
       </Collapse>
     </AppBar>

@@ -1,13 +1,13 @@
 import React from 'react'
-import { pico_y_cedula, pico_y_placa } from '../../data'
-import { Entity, GoOutState, GoOutWeekState, City } from '../index.types'
+import { pico_y_cedula, pico_y_placa } from 'data'
+import { Entity, GoOutState, GoOutWeekState, City } from 'components/index.types'
 import { getCurrentDate, getCurrentWeek, dayOfWeekString, DIGITS } from './helpers'
+import { getLabel, todayCanGoOutside, noDataToday, messageForToday } from 'texts'
 import Button from '@material-ui/core/Button'
 import ButtonGroup from '@material-ui/core/ButtonGroup'
 import Typography from '@material-ui/core/Typography'
 import { Collapse } from '@material-ui/core'
 import { CardComponent } from '../index'
-import { getLabel, todayCanGoOutside, noDataToday, messageForToday } from '../../texts'
 import styles from './scss.module.scss'
 import { icon } from '../card/helper'
 import { cardColor } from '../card/card'
@@ -20,33 +20,34 @@ const setLastIDNumber = (
   city: City,
   callbacks: {
     set: (lastIDNumber: number) => void
-    day?: (canGoOut: GoOutState) => void
-    week?: (goOutWeekState: GoOutWeekState) => void
+    day: (canGoOut: GoOutState) => void
+    week: (goOutWeekState: GoOutWeekState) => void
   },
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-) => (_: unknown) => {
+) => (_: unknown): void => {
   callbacks.set(lastIDNumber)
-  if (callbacks.day) {
-    callbacks.day(canGoOut(lastIDNumber, entity, city))
-  }
-  if (callbacks.week) {
-    callbacks.week(canGoOutWeek(lastIDNumber, entity, city))
-  }
+  callbacks.day(canGoOutToday(lastIDNumber, entity, city))
+  callbacks.week(canGoOutWeek(lastIDNumber, entity, city))
 }
 
-const canGoOut = (lastIDNumber: number, entity: Entity, city: City, date = ''): GoOutState => {
+export const canGoOutToday = (
+  lastIDNumber: number,
+  entity: Entity,
+  city: City,
+  date = '',
+): GoOutState => {
   const validLastIDNumbers = data[entity][city][date || getCurrentDate()]
   if (!validLastIDNumbers) return 'ERROR'
   return validLastIDNumbers.some(v => v === lastIDNumber) ? 'YES' : 'NO'
 }
 
-const canGoOutWeek = (lastIDNumber: number, entity: Entity, city: City): GoOutWeekState => {
+export const canGoOutWeek = (lastIDNumber: number, entity: Entity, city: City): GoOutWeekState => {
   const currentWeek: string[] = getCurrentWeek()
   let currentDay = new Date().getDay()
   const result: GoOutWeekState = []
   currentWeek.forEach(date => {
     result.push({
-      canGoOut: canGoOut(lastIDNumber, entity, city, date),
+      canGoOut: canGoOutToday(lastIDNumber, entity, city, date),
       day: dayOfWeekString[currentDay % 7],
       date: date,
     })
@@ -157,8 +158,8 @@ const MainInfoComponent: React.FC<Props> = (props: Props): JSX.Element => {
     currentCity: City,
     callbacks: {
       setIDNumber: (lastIDNumber: number | null) => void
-      setCanGoOutToday?: (canGoOut: GoOutState) => void
-      setCanGoOutWeek?: (goOutWeekState: GoOutWeekState) => void
+      setCanGoOutToday: (canGoOut: GoOutState) => void
+      setCanGoOutWeek: (goOutWeekState: GoOutWeekState) => void
     },
   ) {
     return (

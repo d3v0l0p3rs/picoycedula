@@ -1,14 +1,19 @@
-import React, { useState, MouseEvent } from 'react'
-import { source, email, subjects } from '../../data'
-import { HeaderComponent, MainInfoComponent } from '../index'
-import { GoOutState, GoOutWeekState, City } from '../index.types'
-import { getLabel } from '../../texts'
+import React, { useState, useEffect, MouseEvent } from 'react'
+import { source, email, subjects } from 'data'
+import {
+  HeaderComponent,
+  MainInfoComponent,
+  canGoOutToday,
+  canGoOutWeek,
+} from 'components/index'
+import { getPersonIDNumber, getVehicleIDNumber, getCity, getTheme, setAllLocalStorageData } from 'components/localStorage/localStorage'
+import { GoOutState, GoOutWeekState, City } from 'components/index.types'
+import { getLabel } from 'texts'
 import Typography from '@material-ui/core/Typography'
 import Divider from '@material-ui/core/Divider'
 import Link from '@material-ui/core/Link'
 import Grid from '@material-ui/core/Grid'
 import CssBaseline from '@material-ui/core/CssBaseline'
-
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
 
 const darkTheme = createMuiTheme({
@@ -50,6 +55,28 @@ const HomeComponent: React.FC = (): JSX.Element => {
   const [canVehicleGoOutToday, setCanVehicleGoOutToday] = useState<GoOutState>('UNDEFINED')
   const [canVehicleGoOutWeek, setCanVehicleGoOutWeek] = useState<GoOutWeekState>([])
 
+  const restoreAndUpdateData = (): void => {
+    const personIDNumberLS = getPersonIDNumber()
+    const vehicleIDNumberLS = getVehicleIDNumber()
+    const currentCityLS = getCity() || 'CALI'
+    const darkModeLS = getTheme() === 'dark'
+    setPersonIDNumber(personIDNumberLS)
+    setVehicleIDNumber(vehicleIDNumberLS)
+    setCurrentCity(currentCityLS)
+    setDarkMode(darkModeLS)
+    if (personIDNumberLS !== null ) setCanPersonGoOutToday(canGoOutToday(personIDNumberLS, 'person', currentCityLS))
+    if (personIDNumberLS !== null ) setCanPersonGoOutWeek(canGoOutWeek(personIDNumberLS, 'person', currentCityLS))
+    if (vehicleIDNumberLS !== null ) setCanVehicleGoOutToday(canGoOutToday(vehicleIDNumberLS, 'vehicle', currentCityLS))
+    if (vehicleIDNumberLS !== null ) setCanVehicleGoOutWeek(canGoOutWeek(vehicleIDNumberLS, 'vehicle', currentCityLS))
+  }
+
+  // eslint-disable-next-line
+  useEffect(() => restoreAndUpdateData(), [])
+
+  useEffect(() => {
+    setAllLocalStorageData(personIDNumber, vehicleIDNumber, currentCity, darkMode)
+  })
+
   return (
     <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
       <CssBaseline />
@@ -59,16 +86,16 @@ const HomeComponent: React.FC = (): JSX.Element => {
           darkMode={darkMode}
           setDarkMode={setDarkMode}
           setCurrentCity={setCurrentCity}
-          personIDNumber={personIDNumber as number}
-          vehicleIDNumber={vehicleIDNumber as number}></HeaderComponent>
+          personIDNumber={personIDNumber}
+          vehicleIDNumber={vehicleIDNumber}></HeaderComponent>
 
         <Grid container spacing={0}>
           <Grid item xs={12} sm={12} md={6} lg={6} style={{ paddingTop: '25px' }}>
             <MainInfoComponent
+              entity={'person'}
               IDNumber={personIDNumber}
               canGoOutToday={canPersonGoOutToday}
               canGoOutWeek={canPersonGoOutWeek}
-              entity={'person'}
               currentCity={currentCity}
               setIDNumber={setPersonIDNumber}
               setCanGoOutToday={setCanPersonGoOutToday}
@@ -78,10 +105,10 @@ const HomeComponent: React.FC = (): JSX.Element => {
 
           <Grid item xs={12} sm={12} md={6} lg={6} style={{ paddingTop: '25px' }}>
             <MainInfoComponent
+              entity={'vehicle'}
               IDNumber={vehicleIDNumber}
               canGoOutToday={canVehicleGoOutToday}
               canGoOutWeek={canVehicleGoOutWeek}
-              entity={'vehicle'}
               currentCity={currentCity}
               setIDNumber={setVehicleIDNumber}
               setCanGoOutToday={setCanVehicleGoOutToday}
