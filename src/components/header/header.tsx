@@ -25,7 +25,7 @@ const HeaderComponent: React.FC<Props> = (props: Props): JSX.Element => {
           <Button
             style={{ marginLeft: 'auto', color: 'white' }}
             onClick={() => {
-              props.setDarkMode(!props.darkMode)
+              props.setDarkMode(false)
             }}>
             <Brightness7Icon></Brightness7Icon>
           </Button>
@@ -33,7 +33,7 @@ const HeaderComponent: React.FC<Props> = (props: Props): JSX.Element => {
           <Button
             style={{ marginLeft: 'auto', color: 'white' }}
             onClick={() => {
-              props.setDarkMode(props.darkMode)
+              props.setDarkMode(true)
             }}>
             <Brightness4Icon></Brightness4Icon>
           </Button>
@@ -58,9 +58,9 @@ const HeaderComponent: React.FC<Props> = (props: Props): JSX.Element => {
           variant="subtitle1"
           color="textSecondary"
           style={{ width: 'fit-content', paddingLeft: '20px', lineHeight: '20px' }}>
-          {props.personIDNumber !== null ? 'Cédula: ########' + props.personIDNumber : ''}
+          {props.personIDNumber !== null ? 'Cédula: ...' + props.personIDNumber : ''}
           {props.personIDNumber !== null && props.vehicleIDNumber !== null ? ' | ' : ''}
-          {props.vehicleIDNumber !== null ? 'Placa: ###-##' + props.vehicleIDNumber : ''}
+          {props.vehicleIDNumber !== null ? 'Placa: ...' + props.vehicleIDNumber : ''}
         </Typography>
       </Collapse>
     </AppBar>

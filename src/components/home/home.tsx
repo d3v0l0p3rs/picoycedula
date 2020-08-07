@@ -83,7 +83,7 @@ const HomeComponent: React.FC = (): JSX.Element => {
   })
 
   return (
-    <ThemeProvider theme={darkTheme}>
+    <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
       {/* Fix this to include light mode */}
       <CssBaseline />
       <div className="App">
