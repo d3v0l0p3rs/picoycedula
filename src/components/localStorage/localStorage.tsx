@@ -45,7 +45,7 @@ export const clearCity = (): void => {
 }
 
 export const setTheme = (theme: Theme): void => {
-  // localStorage.setItem(themeKey, theme) // TODO FIX
+  localStorage.setItem(themeKey, theme)
 }
 
 export const getTheme = (): Theme | null => {

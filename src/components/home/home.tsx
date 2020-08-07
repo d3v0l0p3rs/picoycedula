@@ -1,12 +1,13 @@
 import React, { useState, useEffect, MouseEvent } from 'react'
 import { source, email, subjects } from 'data'
+import { HeaderComponent, MainInfoComponent, canGoOutToday, canGoOutWeek } from 'components/index'
 import {
-  HeaderComponent,
-  MainInfoComponent,
-  canGoOutToday,
-  canGoOutWeek,
-} from 'components/index'
-import { getPersonIDNumber, getVehicleIDNumber, getCity, getTheme, setAllLocalStorageData } from 'components/localStorage/localStorage'
+  getPersonIDNumber,
+  getVehicleIDNumber,
+  getCity,
+  getTheme,
+  setAllLocalStorageData,
+} from 'components/localStorage/localStorage'
 import { GoOutState, GoOutWeekState, City } from 'components/index.types'
 import { getLabel } from 'texts'
 import Typography from '@material-ui/core/Typography'
@@ -64,10 +65,14 @@ const HomeComponent: React.FC = (): JSX.Element => {
     setVehicleIDNumber(vehicleIDNumberLS)
     setCurrentCity(currentCityLS)
     setDarkMode(darkModeLS)
-    if (personIDNumberLS !== null ) setCanPersonGoOutToday(canGoOutToday(personIDNumberLS, 'person', currentCityLS))
-    if (personIDNumberLS !== null ) setCanPersonGoOutWeek(canGoOutWeek(personIDNumberLS, 'person', currentCityLS))
-    if (vehicleIDNumberLS !== null ) setCanVehicleGoOutToday(canGoOutToday(vehicleIDNumberLS, 'vehicle', currentCityLS))
-    if (vehicleIDNumberLS !== null ) setCanVehicleGoOutWeek(canGoOutWeek(vehicleIDNumberLS, 'vehicle', currentCityLS))
+    if (personIDNumberLS !== null)
+      setCanPersonGoOutToday(canGoOutToday(personIDNumberLS, 'person', currentCityLS))
+    if (personIDNumberLS !== null)
+      setCanPersonGoOutWeek(canGoOutWeek(personIDNumberLS, 'person', currentCityLS))
+    if (vehicleIDNumberLS !== null)
+      setCanVehicleGoOutToday(canGoOutToday(vehicleIDNumberLS, 'vehicle', currentCityLS))
+    if (vehicleIDNumberLS !== null)
+      setCanVehicleGoOutWeek(canGoOutWeek(vehicleIDNumberLS, 'vehicle', currentCityLS))
   }
 
   // eslint-disable-next-line
@@ -78,7 +83,8 @@ const HomeComponent: React.FC = (): JSX.Element => {
   })
 
   return (
-    <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
+    <ThemeProvider theme={darkTheme}>
+      {/* Fix this to include light mode */}
       <CssBaseline />
       <div className="App">
         <HeaderComponent
@@ -117,7 +123,7 @@ const HomeComponent: React.FC = (): JSX.Element => {
           </Grid>
         </Grid>
 
-        <Typography>
+        <Typography style={{ paddingTop: '20px', paddingBottom: '5px' }}>
           <Link href={`mailto:${email}${subjects['issue']}`} color="secondary">
             {getLabel('reportIssue')}
           </Link>
