@@ -1,6 +1,5 @@
 import React from 'react'
 import { GoOutState, Entity } from '../index.types'
-import Block from '@material-ui/icons/Block'
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline'
 import ReportProblemOutlinedIcon from '@material-ui/icons/ReportProblemOutlined'
 import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline'

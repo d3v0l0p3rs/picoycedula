@@ -44,6 +44,13 @@ export const pico_y_placa: { [city in City]: { [date: string]: number[] } } = {
   CALI: { '20/07/31': [2, 0] },
 }
 
+export const email = 'spam@gmail.com'
+
+export const subjects: { [type in 'issue' | 'contact']: string } = {
+  issue: '?subject=Reporte%de%20un%20problema',
+  contact: '?subject=Quiero%20contactar%20con%20ustedes',
+}
+
 export const source: { [city in City]: string } = {
-  CALI: 'https://www.twitch.tv/androsv',
+  CALI: 'https://twitter.com/AlcaldiaDeCali',
 }

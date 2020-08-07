@@ -12,13 +12,12 @@ import HighlightOffIcon from '@material-ui/icons/HighlightOff'
 
 const cardStyle = (canGoOut: GoOutState) => {
   const border = {
-    YES: '3px solid green',
-    NO: '3px solid red',
-    ERROR: '3px solid yellow',
-    UNDEFINED: '3px solid gray',
+    YES: '3px solid ' + cardColor(canGoOut),
+    NO: '3px solid ' + cardColor(canGoOut),
+    ERROR: '3px solid ' + cardColor(canGoOut),
+    UNDEFINED: '3px solid ' + cardColor(canGoOut),
   }
   return {
-    backgroundColor: 'white',
     border: border[canGoOut],
     display: 'inline-block',
     margin: '20px 40px',
@@ -49,13 +48,24 @@ export const cardIcon = (canGoOut: GoOutState, entity: Entity): JSX.Element => {
   }[canGoOut][entity]
 }
 
+export const cardColor = (canGoOut: GoOutState): string => {
+  return {
+    YES: '#009933',
+    NO: '#b00020',
+    ERROR: '#cc6600',
+    UNDEFINED: '#1976d0',
+  }[canGoOut]
+}
+
 const CardComponent: React.FC<Props> = (props: Props): JSX.Element => {
   return (
     <Card style={cardStyle(props.canGoOut)}>
       <CardActionArea style={{ height: '100%' }}>
-        {cardIcon(props.canGoOut, props.entity)}
+        <Typography style={{ color: cardColor(props.canGoOut) }}>
+          {cardIcon(props.canGoOut, props.entity)}
+        </Typography>
         <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
+          <Typography gutterBottom variant="h6" component="h2">
             {props.text}
           </Typography>
         </CardContent>
