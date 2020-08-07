@@ -139,7 +139,7 @@ const MainInfoComponent: React.FC<Props> = (props: Props): JSX.Element => {
           <ButtonGroup color="secondary" variant="text" size="small" style={{ width: '350px' }}>
             {props.canGoOutWeek.map((v, k) => (
               <Button style={{ display: 'block' }} color="secondary" key={k}>
-                {v.day.slice(0, 3)} {v.date.slice(3)}
+                {v.day.slice(0, 3)} {v.date.slice(3).split('/').reverse().join('/')}
                 <Typography style={{ color: cardColor(v.canGoOut) }}>
                   {icon(v.canGoOut, props.entity)}
                 </Typography>
