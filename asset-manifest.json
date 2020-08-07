@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/picoycedula/static/css/main.2e884112.chunk.css",
-    "main.js": "/picoycedula/static/js/main.e73c0d23.chunk.js",
-    "main.js.map": "/picoycedula/static/js/main.e73c0d23.chunk.js.map",
+    "main.js": "/picoycedula/static/js/main.0fd34d6f.chunk.js",
+    "main.js.map": "/picoycedula/static/js/main.0fd34d6f.chunk.js.map",
     "runtime-main.js": "/picoycedula/static/js/runtime-main.68981660.js",
     "runtime-main.js.map": "/picoycedula/static/js/runtime-main.68981660.js.map",
     "static/js/2.0b7a0b7e.chunk.js": "/picoycedula/static/js/2.0b7a0b7e.chunk.js",
     "static/js/2.0b7a0b7e.chunk.js.map": "/picoycedula/static/js/2.0b7a0b7e.chunk.js.map",
     "index.html": "/picoycedula/index.html",
-    "precache-manifest.8a5a040f85383d0f0226d249189563fe.js": "/picoycedula/precache-manifest.8a5a040f85383d0f0226d249189563fe.js",
+    "precache-manifest.423bbb3cbf723595da9c3dd898991c89.js": "/picoycedula/precache-manifest.423bbb3cbf723595da9c3dd898991c89.js",
     "service-worker.js": "/picoycedula/service-worker.js",
     "static/css/main.2e884112.chunk.css.map": "/picoycedula/static/css/main.2e884112.chunk.css.map",
     "static/js/2.0b7a0b7e.chunk.js.LICENSE.txt": "/picoycedula/static/js/2.0b7a0b7e.chunk.js.LICENSE.txt"
@@ -17,6 +17,6 @@
     "static/js/runtime-main.68981660.js",
     "static/js/2.0b7a0b7e.chunk.js",
     "static/css/main.2e884112.chunk.css",
-    "static/js/main.e73c0d23.chunk.js"
+    "static/js/main.0fd34d6f.chunk.js"
   ]
 }
