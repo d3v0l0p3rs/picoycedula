@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/picoycedula/precache-manifest.2390aa33336813e4e359831ed646b63a.js"
+  "/picoycedula/precache-manifest.8a5a040f85383d0f0226d249189563fe.js"
 );
 
 self.addEventListener('message', (event) => {

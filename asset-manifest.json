@@ -1,22 +1,22 @@
 {
   "files": {
     "main.css": "/picoycedula/static/css/main.2e884112.chunk.css",
-    "main.js": "/picoycedula/static/js/main.cb51caeb.chunk.js",
-    "main.js.map": "/picoycedula/static/js/main.cb51caeb.chunk.js.map",
+    "main.js": "/picoycedula/static/js/main.e73c0d23.chunk.js",
+    "main.js.map": "/picoycedula/static/js/main.e73c0d23.chunk.js.map",
     "runtime-main.js": "/picoycedula/static/js/runtime-main.68981660.js",
     "runtime-main.js.map": "/picoycedula/static/js/runtime-main.68981660.js.map",
-    "static/js/2.5bcf67aa.chunk.js": "/picoycedula/static/js/2.5bcf67aa.chunk.js",
-    "static/js/2.5bcf67aa.chunk.js.map": "/picoycedula/static/js/2.5bcf67aa.chunk.js.map",
+    "static/js/2.0b7a0b7e.chunk.js": "/picoycedula/static/js/2.0b7a0b7e.chunk.js",
+    "static/js/2.0b7a0b7e.chunk.js.map": "/picoycedula/static/js/2.0b7a0b7e.chunk.js.map",
     "index.html": "/picoycedula/index.html",
-    "precache-manifest.2390aa33336813e4e359831ed646b63a.js": "/picoycedula/precache-manifest.2390aa33336813e4e359831ed646b63a.js",
+    "precache-manifest.8a5a040f85383d0f0226d249189563fe.js": "/picoycedula/precache-manifest.8a5a040f85383d0f0226d249189563fe.js",
     "service-worker.js": "/picoycedula/service-worker.js",
     "static/css/main.2e884112.chunk.css.map": "/picoycedula/static/css/main.2e884112.chunk.css.map",
-    "static/js/2.5bcf67aa.chunk.js.LICENSE.txt": "/picoycedula/static/js/2.5bcf67aa.chunk.js.LICENSE.txt"
+    "static/js/2.0b7a0b7e.chunk.js.LICENSE.txt": "/picoycedula/static/js/2.0b7a0b7e.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.68981660.js",
-    "static/js/2.5bcf67aa.chunk.js",
+    "static/js/2.0b7a0b7e.chunk.js",
     "static/css/main.2e884112.chunk.css",
-    "static/js/main.cb51caeb.chunk.js"
+    "static/js/main.e73c0d23.chunk.js"
   ]
 }
