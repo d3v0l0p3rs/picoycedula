@@ -105,7 +105,7 @@ const HomeComponent: React.FC = (): JSX.Element => {
           </Link>
           {' | '}
           <Link href={`mailto:${email}${subjects['contact']}`} color="secondary">
-            {getLabel('reportIssue')}
+            {getLabel('contact')}
           </Link>
         </Typography>
       </div>

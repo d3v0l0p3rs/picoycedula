@@ -5,11 +5,8 @@ const labels: { [name: string]: string } = {
   pickLastCCNumber: 'Seleccione el último dígito de su cédula',
   pickLastPlateNumber: 'Seleccione el último dígito de su placa',
   pickAnotherLastNumber: 'Seleccionar otro dígito',
-  canGoOut: 'Puedes salir',
-  canNotGoOut: 'NO puedes salir',
-  canDrive: 'Puedes manejar',
-  canNotDrive: 'NO puedes manejar',
   reportIssue: 'Reportar un problema',
+  contact: 'Contáctenos',
   infoSource: 'Fuente',
   default: '¯\\_(ツ)_/¯',
 }
@@ -32,15 +29,7 @@ const noDataToday = (entity: Entity, city: City): string => {
   }[entity]
 }
 
-const currentLastIDNumber = (entity: Entity, lastIDNumber: number): string => {
-  return {
-    person: `El último dígito de su cédula es ${lastIDNumber}`,
-    vehicle: `El último dígito de su placa es ${lastIDNumber}`,
-  }[entity]
-}
-
 const messageForToday = (state: GoOutState, entity: Entity): string => {
-  // Esto es solo para mostrar los datos y ya, se puede borrar eventualmente
   return {
     YES: { person: 'Puedes salir', vehicle: 'Puedes conducir' },
     NO: { person: 'Quédate en casa', vehicle: 'NO puedes conducir' },
@@ -55,4 +44,4 @@ const messageForToday = (state: GoOutState, entity: Entity): string => {
   }[state][entity]
 }
 
-export { getLabel, todayCanGoOutside, noDataToday, currentLastIDNumber, messageForToday }
+export { getLabel, todayCanGoOutside, noDataToday, messageForToday }
