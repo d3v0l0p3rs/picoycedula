@@ -20,8 +20,8 @@ const cardStyle = (canGoOut: GoOutState) => {
   return {
     border: border[canGoOut],
     display: 'inline-block',
-    margin: '20px 40px',
-    height: '180px',
+    margin: '25px 40px',
+    height: '160px',
     width: '200px',
     transition: 'all .5s ease',
     WebkitTransition: 'all .5s ease',
@@ -64,8 +64,8 @@ const CardComponent: React.FC<Props> = (props: Props): JSX.Element => {
         <Typography style={{ color: cardColor(props.canGoOut) }}>
           {cardIcon(props.canGoOut, props.entity)}
         </Typography>
-        <CardContent>
-          <Typography gutterBottom variant="h6" component="h2">
+        <CardContent style={{ padding: '0px' }}>
+          <Typography gutterBottom variant="h6">
             {props.text}
           </Typography>
         </CardContent>

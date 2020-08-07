@@ -25,7 +25,6 @@ export const dayOfWeekString: { [n: number]: Day } = {
   4: 'Jueves',
   5: 'Viernes',
   6: 'Sábado',
-  7: 'Domingo',
 }
 
 export const DIGITS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]

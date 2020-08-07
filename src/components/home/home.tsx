@@ -1,4 +1,4 @@
-import React, { useState, useEffect, MouseEvent } from 'react'
+import React, { useState, useEffect } from 'react'
 import { source, email, subjects } from 'data'
 import { HeaderComponent, MainInfoComponent, canGoOutToday, canGoOutWeek } from 'components/index'
 import {
@@ -99,12 +99,7 @@ const HomeComponent: React.FC = (): JSX.Element => {
             {getLabel('reportIssue')}
           </Link>
           {' | '}
-          <Link
-            href={source[currentCity]}
-            color="secondary"
-            target="_blank"
-            rel="noopener"
-            onClick={(event: MouseEvent) => event.preventDefault()}>
+          <Link href={source[currentCity]} color="secondary" target="_blank" rel="noopener">
             {getLabel('infoSource')}
           </Link>
           {' | '}

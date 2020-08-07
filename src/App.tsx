@@ -8,15 +8,13 @@ const history = createBrowserHistory()
 
 const App: React.FC = (): JSX.Element => {
   return (
-    <React.StrictMode>
-      <Router history={history}>
-        <div>
-          <Switch>
-            <Route exact path="*" component={HomeComponent} />
-          </Switch>
-        </div>
-      </Router>
-    </React.StrictMode>
+    <Router history={history}>
+      <div>
+        <Switch>
+          <Route exact path="*" component={HomeComponent} />
+        </Switch>
+      </div>
+    </Router>
   )
 }
 

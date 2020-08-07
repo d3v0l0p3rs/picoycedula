@@ -1,5 +1,5 @@
 import React from 'react'
-import { pico_y_cedula, pico_y_placa } from 'data'
+import { getData } from 'data'
 import { Entity, GoOutState, GoOutWeekState, City } from 'components/index.types'
 import { getCurrentDate, getCurrentWeek, dayOfWeekString, DIGITS } from './helpers'
 import { getLabel, todayCanGoOutside, noDataToday, messageForToday } from 'texts'
@@ -11,8 +11,6 @@ import { CardComponent } from '../index'
 import styles from './scss.module.scss'
 import { icon } from '../card/helper'
 import { cardColor } from '../card/card'
-
-const data = { person: pico_y_cedula, vehicle: pico_y_placa }
 
 const setLastIDNumber = (
   lastIDNumber: number,
@@ -36,7 +34,7 @@ export const canGoOutToday = (
   city: City,
   date = '',
 ): GoOutState => {
-  const validLastIDNumbers = data[entity][city][date || getCurrentDate()]
+  const validLastIDNumbers = getData(entity, city, date || getCurrentDate())
   if (!validLastIDNumbers) return 'ERROR'
   return validLastIDNumbers.some(v => v === lastIDNumber) ? 'YES' : 'NO'
 }
@@ -115,13 +113,13 @@ const MainInfoComponent: React.FC<Props> = (props: Props): JSX.Element => {
         />
       </div>
       <div className={styles.msgsContainer}>
-        {data[props.entity][props.currentCity][getCurrentDate()] ? (
+        {getData(props.entity, props.currentCity, getCurrentDate()) ? (
           <>
             <Typography variant="body1" color="textPrimary" style={{ paddingBottom: '10px' }}>
               {todayCanGoOutside(props.entity, props.currentCity)}
             </Typography>
             <ButtonGroup color="secondary" variant="text" size="large">
-              {data[props.entity][props.currentCity][getCurrentDate()].map((v, k) => (
+              {(() => getData(props.entity, props.currentCity, getCurrentDate()) || [])().map((v, k) => (
                 <Button style={{ display: 'block' }} color="secondary" key={k}>
                   {v}
                 </Button>
