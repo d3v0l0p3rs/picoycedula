@@ -21,7 +21,7 @@ const cardStyle = (canGoOut: GoOutState) => {
     border: border[canGoOut],
     display: 'inline-block',
     margin: '20px 40px',
-    height: '150px',
+    height: '180px',
     width: '200px',
     transition: 'all .5s ease',
     WebkitTransition: 'all .5s ease',
