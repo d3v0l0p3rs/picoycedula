@@ -8,6 +8,7 @@ import {
   getTheme,
   setAllLocalStorageData,
 } from 'components/localStorage/localStorage'
+import { darkTheme, lightTheme } from './themeProvider'
 import { GoOutState, GoOutWeekState, City } from 'components/index.types'
 import { getLabel } from 'texts'
 import Typography from '@material-ui/core/Typography'
@@ -15,36 +16,7 @@ import Divider from '@material-ui/core/Divider'
 import Link from '@material-ui/core/Link'
 import Grid from '@material-ui/core/Grid'
 import CssBaseline from '@material-ui/core/CssBaseline'
-import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
-
-const darkTheme = createMuiTheme({
-  palette: {
-    type: 'dark',
-    primary: {
-      main: '#3949ab',
-    },
-    secondary: {
-      main: '#40c4ff',
-    },
-    text: {
-      secondary: '#e0e0e0',
-    },
-  },
-})
-
-const lightTheme = createMuiTheme({
-  palette: {
-    primary: {
-      main: '#3949ab',
-    },
-    secondary: {
-      main: '#3949ab',
-    },
-    text: {
-      secondary: '#e0e0e0',
-    },
-  },
-})
+import { MuiThemeProvider } from '@material-ui/core/styles'
 
 const HomeComponent: React.FC = (): JSX.Element => {
   const [currentCity, setCurrentCity] = useState<City>('CALI')
@@ -83,8 +55,7 @@ const HomeComponent: React.FC = (): JSX.Element => {
   })
 
   return (
-    <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
-      {/* Fix this to include light mode */}
+    <MuiThemeProvider theme={darkMode ? darkTheme : lightTheme}>
       <CssBaseline />
       <div className="App">
         <HeaderComponent
@@ -142,7 +113,7 @@ const HomeComponent: React.FC = (): JSX.Element => {
           </Link>
         </Typography>
       </div>
-    </ThemeProvider>
+    </MuiThemeProvider>
   )
 }
 
