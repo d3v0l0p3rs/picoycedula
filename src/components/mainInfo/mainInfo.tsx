@@ -2,7 +2,14 @@ import React, { useState } from 'react'
 import { getData } from 'data'
 import { Entity, GoOutState, GoOutWeekState, City } from 'components/index.types'
 import { getCurrentDate, getCurrentWeek, dayOfWeekString, DIGITS } from './helpers'
-import { getLabel, todayCanGoOutside, noDataToday, messageForToday, canGoOutOnDay } from 'texts'
+import {
+  getLabel,
+  todayCanGoOutside,
+  noDataToday,
+  messageForToday,
+  canGoOutOnDay,
+  lastNumbersCanGoOut,
+} from 'texts'
 import Button from '@material-ui/core/Button'
 import Popover from '@material-ui/core/Popover'
 import ButtonGroup from '@material-ui/core/ButtonGroup'
@@ -146,7 +153,19 @@ const MainInfoComponent: React.FC<Props> = (props: Props): JSX.Element => {
             </Typography>
             <ButtonGroup color="secondary" variant="text" size="large">
               {(() => getData(props.entity, props.currentCity, getCurrentDate()) || [])().map((v, k) => (
-                <Button style={{ display: 'block' }} color="secondary" key={k}>
+                <Button
+                  style={{ display: 'block' }}
+                  color="secondary"
+                  key={k}
+                  onClick={event => {
+                    openPopover(
+                      event,
+                      lastNumbersCanGoOut(props.entity),
+                      setPopover,
+                      setAnchorEl,
+                      setPopoverMessage,
+                    )
+                  }}>
                   {v}
                 </Button>
               ))}
@@ -189,7 +208,7 @@ const MainInfoComponent: React.FC<Props> = (props: Props): JSX.Element => {
               closePopover(setPopover, setAnchorEl, setPopoverMessage)
             }}
             anchorOrigin={{
-              vertical: 'top',
+              vertical: 'bottom',
               horizontal: 'left',
             }}
             transformOrigin={{

@@ -11,25 +11,25 @@ const labels: { [name: string]: string } = {
   default: '¯\\_(ツ)_/¯',
 }
 
-const getLabel = (name: string): string => {
+export const getLabel = (name: string): string => {
   return labels[name] || labels.default
 }
 
-const todayCanGoOutside = (entity: Entity, city: City): string => {
+export const todayCanGoOutside = (entity: Entity, city: City): string => {
   return {
     person: `Hoy pueden salir en ${cities[city]} las personas cuyos números de cédula terminen en `,
     vehicle: `Hoy pueden rodar en ${cities[city]} los vehículos cuyas placas terminen en `,
   }[entity]
 }
 
-const noDataToday = (entity: Entity, city: City): string => {
+export const noDataToday = (entity: Entity, city: City): string => {
   return {
     person: `No hay datos para pico y cédula en ${cities[city]} el día de hoy`,
     vehicle: `No hay datos para pico y placa en ${cities[city]} el día de hoy`,
   }[entity]
 }
 
-const messageForToday = (state: GoOutState, entity: Entity): string => {
+export const messageForToday = (state: GoOutState, entity: Entity): string => {
   return {
     YES: { person: 'Puedes salir', vehicle: 'Puedes conducir' },
     NO: { person: 'Quédate en casa', vehicle: 'NO puedes conducir' },
@@ -57,4 +57,9 @@ export const canGoOutOnDay = (
   return `Usted ${canGoOut} puede ${verb} el día ${date} (${day}) en ${city}`
 }
 
-export { getLabel, todayCanGoOutside, noDataToday, messageForToday }
+export const lastNumbersCanGoOut = (entity: Entity): string => {
+  return {
+    person: 'Las personas con cédulas terminadas en estos números pueden salir hoy',
+    vehicle: 'Los vehículos con placas terminadas en estos números NO pueden salir hoy',
+  }[entity]
+}
