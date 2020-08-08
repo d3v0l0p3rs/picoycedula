@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { getData } from 'data'
 import { Entity, GoOutState, GoOutWeekState, City } from 'components/index.types'
 import { getCurrentDate, getCurrentWeek, dayOfWeekString, DIGITS } from './helpers'
-import { getLabel, todayCanGoOutside, noDataToday, messageForToday } from 'texts'
+import { getLabel, todayCanGoOutside, noDataToday, messageForToday, canGoOutOnDay } from 'texts'
 import Button from '@material-ui/core/Button'
+import Popover from '@material-ui/core/Popover'
 import ButtonGroup from '@material-ui/core/ButtonGroup'
 import Typography from '@material-ui/core/Typography'
 import { Collapse } from '@material-ui/core'
@@ -54,6 +55,27 @@ export const canGoOutWeek = (lastIDNumber: number, entity: Entity, city: City): 
   return result
 }
 
+const openPopover = (
+  event: { currentTarget: Element },
+  message: string,
+  popoverCallback: (value: boolean) => void,
+  anchorCallback: (value: Element | null) => void,
+  setPopoverMessage: (message: string) => void,
+) => {
+  anchorCallback(event.currentTarget)
+  setPopoverMessage(message)
+  popoverCallback(true)
+}
+const closePopover = (
+  popoverCallback: (value: boolean) => void,
+  anchorCallback: (value: Element | null) => void,
+  setPopoverMessage: (message: string) => void,
+) => {
+  anchorCallback(null)
+  setPopoverMessage('')
+  popoverCallback(false)
+}
+
 export interface Props {
   IDNumber: number | null
   canGoOutToday: GoOutState
@@ -66,6 +88,10 @@ export interface Props {
 }
 
 const MainInfoComponent: React.FC<Props> = (props: Props): JSX.Element => {
+  const [popover, setPopover] = useState<boolean>(false)
+  const [popoverMessage, setPopoverMessage] = useState<string>('')
+  const [anchorEl, setAnchorEl] = useState<Element | null>(null)
+
   return (
     <div>
       <Collapse in={props.IDNumber === null}>
@@ -136,7 +162,19 @@ const MainInfoComponent: React.FC<Props> = (props: Props): JSX.Element => {
         <div className={styles.weekMsgsContainer}>
           <ButtonGroup color="secondary" variant="text" size="small" style={{ width: '350px' }}>
             {props.canGoOutWeek.map((v, k) => (
-              <Button style={{ display: 'block' }} color="secondary" key={k}>
+              <Button
+                style={{ display: 'block' }}
+                color="secondary"
+                key={k}
+                onClick={event => {
+                  openPopover(
+                    event,
+                    canGoOutOnDay(props.entity, v.canGoOut, v.date, v.day, props.currentCity),
+                    setPopover,
+                    setAnchorEl,
+                    setPopoverMessage,
+                  )
+                }}>
                 {v.day.slice(0, 3)} {v.date.slice(3).split('/').reverse().join('/')}
                 <Typography style={{ color: cardColor(v.canGoOut) }}>
                   {icon(v.canGoOut, props.entity)}
@@ -144,6 +182,22 @@ const MainInfoComponent: React.FC<Props> = (props: Props): JSX.Element => {
               </Button>
             ))}
           </ButtonGroup>
+          <Popover
+            open={popover}
+            anchorEl={anchorEl}
+            onClose={() => {
+              closePopover(setPopover, setAnchorEl, setPopoverMessage)
+            }}
+            anchorOrigin={{
+              vertical: 'top',
+              horizontal: 'left',
+            }}
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'left',
+            }}>
+            {popoverMessage}
+          </Popover>
         </div>
       </Collapse>
     </div>
