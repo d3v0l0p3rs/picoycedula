@@ -51,10 +51,13 @@ export const canGoOutOnDay = (
   day: Day,
   city: City,
 ): string => {
-  if (state === 'ERROR') return `No hay información disponible para el día ${date} (${day}) en ${city}`
+  let newDate = date.split('/').reverse().join('/')
+  newDate = newDate.slice(0, 6) + '20' + newDate.slice(6)
+  if (state === 'ERROR')
+    return `No hay información disponible para el día ${newDate} (${day}) en ${city}`
   const canGoOut = state === 'YES' ? 'SÍ' : 'NO'
   const verb = { person: 'salir', vehicle: 'manejar' }[entity]
-  return `Usted ${canGoOut} puede ${verb} el día ${date} (${day}) en ${city}`
+  return `Usted ${canGoOut} puede ${verb} el día ${newDate} (${day}) en ${city}`
 }
 
 export const lastNumbersCanGoOut = (entity: Entity): string => {
