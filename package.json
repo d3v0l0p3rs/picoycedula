@@ -1,6 +1,6 @@
 {
-  "name": "base-app",
-  "version": "0.1.0",
+  "name": "placa-y-cedula",
+  "version": "1.0.0",
   "private": true,
   "homepage": "http://d3v0l0p3rs.github.io/picoycedula",
   "dependencies": {

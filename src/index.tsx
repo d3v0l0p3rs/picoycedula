@@ -6,11 +6,9 @@ import * as serviceWorker from './serviceWorker'
 import ThemeProvider from 'components/home/themeProvider'
 
 ReactDOM.render(
-  <React.StrictMode>
-    <ThemeProvider>
-      <App />
-    </ThemeProvider>
-  </React.StrictMode>,
+  <ThemeProvider>
+    <App />
+  </ThemeProvider>,
   document.getElementById('root'),
 )
 
