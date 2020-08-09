@@ -1,6 +1,6 @@
 {
   "name": "Placa y Cédula Colombia",
-  "short_name": "PyC Col",
+  "short_name": "Placa y Cédula Colombia",
   "lang": "es",
   "description": "Pico y placa y pico y cédula para colombia",
   "icons": [
@@ -85,6 +85,6 @@
   "background_color": "#303030",
   "display": "standalone",
   "orientation": "portrait",
-  "scope": "https://d3v0l0p3rs.github.io/picoycedula/",
+  "scope": "d3v0l0p3rs.github.io",
   "start_url": "https://d3v0l0p3rs.github.io/picoycedula/"
 }
