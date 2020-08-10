@@ -88,17 +88,25 @@ const pico_y_placa_week: { [city in City]: { [day: number]: number[] } } = {
   },
 }
 
-export const getData = (entity: Entity, city: City, date: string): number[] | null => {
+export const getData = (
+  entity: Entity,
+  city: City,
+  date: string,
+): number[] | null => {
   if (entity === 'person') {
     return pico_y_cedula[city][date] || null
   } else if (entity === 'vehicle') {
     let result = pico_y_placa[city][date] || null
     if (!result) {
-      const [year, month, day] = date.split('/').map((v, i) => parseInt(v) + (i === 0 ? 2000 : 0))
+      const [year, month, day] = date
+        .split('/')
+        .map((v, i) => parseInt(v) + (i === 0 ? 2000 : 0))
       const newDate = new Date(year, month - 1, day)
       result = pico_y_placa_week[city][newDate.getDay()]
     }
-    return result ? [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].filter(n => !result.includes(n)) : null
+    return result
+      ? [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].filter(n => !result.includes(n))
+      : null
   }
   return null
 }

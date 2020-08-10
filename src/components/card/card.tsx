@@ -36,7 +36,10 @@ export const cardIcon = (canGoOut: GoOutState, entity: Entity): JSX.Element => {
       person: <CheckCircleOutlineIcon style={style} />,
       vehicle: <CheckCircleOutlineIcon style={style} />,
     },
-    NO: { person: <HighlightOffIcon style={style} />, vehicle: <HighlightOffIcon style={style} /> },
+    NO: {
+      person: <HighlightOffIcon style={style} />,
+      vehicle: <HighlightOffIcon style={style} />,
+    },
     ERROR: {
       person: <ReportProblemOutlinedIcon style={style} />,
       vehicle: <ErrorOutlineIcon style={style} />,

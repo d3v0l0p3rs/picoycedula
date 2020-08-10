@@ -63,6 +63,7 @@ export const canGoOutOnDay = (
 export const lastNumbersCanGoOut = (entity: Entity): string => {
   return {
     person: 'Las personas con cédulas terminadas en estos números pueden salir hoy',
-    vehicle: 'Los vehículos con placas terminadas en estos números NO pueden salir hoy',
+    vehicle:
+      'Los vehículos con placas terminadas en estos números NO pueden salir hoy',
   }[entity]
 }

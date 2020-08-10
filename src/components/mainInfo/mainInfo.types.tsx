@@ -1,8 +1,12 @@
-import { City } from '../index.types'
+import { City, GoOutState, GoOutWeekState, Entity } from '../index.types'
 
 export interface Props {
+  IDNumber: number | null
+  canGoOutToday: GoOutState
+  canGoOutWeek: GoOutWeekState
+  entity: Entity
   currentCity: City
-  setCurrentCity: (city: City) => void
-  personIDNumber: number
-  vehicleIDNumber: number
+  setIDNumber: (lastIDNumber: number | null) => void
+  setCanGoOutToday: (canGoOut: GoOutState) => void
+  setCanGoOutWeek: (goOutWeekState: GoOutWeekState) => void
 }

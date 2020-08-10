@@ -42,7 +42,9 @@ const HeaderComponent: React.FC<Props> = (props: Props): JSX.Element => {
           value={props.currentCity}
           style={{ marginLeft: 'auto', color: 'white' }}
           onChange={e => {
-            props.setCurrentCity(e.target.value as City)
+            props.updateData({
+              currentCity: e.target.value as City,
+            })
           }}
           className={styles.selectedCity}>
           {Object.entries(cities).map(([key, value]) => (
@@ -59,8 +61,12 @@ const HeaderComponent: React.FC<Props> = (props: Props): JSX.Element => {
           color="textSecondary"
           style={{ width: 'fit-content', paddingLeft: '20px', lineHeight: '20px' }}>
           {props.personIDNumber !== null ? 'Cédula: ...' + props.personIDNumber : ''}
-          {props.personIDNumber !== null && props.vehicleIDNumber !== null ? ' | ' : ''}
-          {props.vehicleIDNumber !== null ? 'Placa: ...' + props.vehicleIDNumber : ''}
+          {props.personIDNumber !== null && props.vehicleIDNumber !== null
+            ? ' | '
+            : ''}
+          {props.vehicleIDNumber !== null
+            ? 'Placa: ...' + props.vehicleIDNumber
+            : ''}
         </Typography>
       </Collapse>
     </AppBar>

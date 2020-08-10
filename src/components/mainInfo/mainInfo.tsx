@@ -19,6 +19,7 @@ import { CardComponent } from '../index'
 import styles from './scss.module.scss'
 import { icon } from '../card/helper'
 import { cardColor } from '../card/card'
+import { Props } from './mainInfo.types'
 
 const setLastIDNumber = (
   lastIDNumber: number,
@@ -47,7 +48,11 @@ export const canGoOutToday = (
   return validLastIDNumbers.some(v => v === lastIDNumber) ? 'YES' : 'NO'
 }
 
-export const canGoOutWeek = (lastIDNumber: number, entity: Entity, city: City): GoOutWeekState => {
+export const canGoOutWeek = (
+  lastIDNumber: number,
+  entity: Entity,
+  city: City,
+): GoOutWeekState => {
   const currentWeek: string[] = getCurrentWeek()
   let currentDay = new Date().getDay()
   const result: GoOutWeekState = []
@@ -83,17 +88,6 @@ const closePopover = (
   popoverCallback(false)
 }
 
-export interface Props {
-  IDNumber: number | null
-  canGoOutToday: GoOutState
-  canGoOutWeek: GoOutWeekState
-  entity: Entity
-  currentCity: City
-  setIDNumber: (lastIDNumber: number | null) => void
-  setCanGoOutToday: (canGoOut: GoOutState) => void
-  setCanGoOutWeek: (goOutWeekState: GoOutWeekState) => void
-}
-
 const MainInfoComponent: React.FC<Props> = (props: Props): JSX.Element => {
   const [popover, setPopover] = useState<boolean>(false)
   const [popoverMessage, setPopoverMessage] = useState<string>('')
@@ -104,9 +98,10 @@ const MainInfoComponent: React.FC<Props> = (props: Props): JSX.Element => {
       <Collapse in={props.IDNumber === null}>
         <Typography variant="h6" color="textPrimary">
           {
-            { person: getLabel('pickLastCCNumber'), vehicle: getLabel('pickLastPlateNumber') }[
-              props.entity
-            ]
+            {
+              person: getLabel('pickLastCCNumber'),
+              vehicle: getLabel('pickLastPlateNumber'),
+            }[props.entity]
           }
         </Typography>
       </Collapse>
@@ -128,13 +123,24 @@ const MainInfoComponent: React.FC<Props> = (props: Props): JSX.Element => {
       </Collapse>
       <Collapse in={props.IDNumber === null}>
         <>
-          {DIGITS.map((value: number, index: number) =>
-            renderDigits(value, index, props.entity, props.currentCity, {
-              setIDNumber: props.setIDNumber,
-              setCanGoOutToday: props.setCanGoOutToday,
-              setCanGoOutWeek: props.setCanGoOutWeek,
-            }),
-          )}
+          {DIGITS.map((value: number, index: number) => (
+            <span key={'span' + index + props.IDNumber + props.currentCity}>
+              {index % 3 === 0 && <br />}
+              <Button
+                key={'' + index + props.IDNumber + props.currentCity}
+                className={styles.digitButton}
+                onClick={setLastIDNumber(value, props.entity, props.currentCity, {
+                  set: props.setIDNumber,
+                  day: props.setCanGoOutToday,
+                  week: props.setCanGoOutWeek,
+                })}
+                color="secondary"
+                variant="outlined"
+                component="span">
+                {value}
+              </Button>
+            </span>
+          ))}
         </>
       </Collapse>
 
@@ -148,15 +154,20 @@ const MainInfoComponent: React.FC<Props> = (props: Props): JSX.Element => {
       <div className={styles.msgsContainer}>
         {getData(props.entity, props.currentCity, getCurrentDate()) ? (
           <>
-            <Typography variant="body1" color="textPrimary" style={{ paddingBottom: '10px' }}>
+            <Typography
+              variant="body1"
+              color="textPrimary"
+              style={{ paddingBottom: '10px' }}>
               {todayCanGoOutside(props.entity, props.currentCity)}
             </Typography>
             <ButtonGroup color="secondary" variant="text" size="large">
-              {(() => getData(props.entity, props.currentCity, getCurrentDate()) || [])().map((v, k) => (
+              {(
+                getData(props.entity, props.currentCity, getCurrentDate()) || []
+              ).map((value, index) => (
                 <Button
                   style={{ display: 'block' }}
                   color="secondary"
-                  key={k}
+                  key={'' + index + props.IDNumber + props.currentCity}
                   onClick={event => {
                     openPopover(
                       event,
@@ -166,37 +177,51 @@ const MainInfoComponent: React.FC<Props> = (props: Props): JSX.Element => {
                       setPopoverMessage,
                     )
                   }}>
-                  {v}
+                  {value}
                 </Button>
               ))}
             </ButtonGroup>
           </>
         ) : (
-          <Typography variant="body1" color="textPrimary" style={{ paddingBottom: '10px' }}>
+          <Typography
+            variant="body1"
+            color="textPrimary"
+            style={{ paddingBottom: '10px' }}>
             {noDataToday(props.entity, props.currentCity)}
           </Typography>
         )}
       </div>
       <Collapse in={props.canGoOutWeek.length > 0}>
         <div className={styles.weekMsgsContainer}>
-          <ButtonGroup color="secondary" variant="text" size="small" style={{ width: '350px' }}>
-            {props.canGoOutWeek.map((v, k) => (
+          <ButtonGroup
+            color="secondary"
+            variant="text"
+            size="small"
+            style={{ width: '350px' }}>
+            {props.canGoOutWeek.map((value, index) => (
               <Button
                 style={{ display: 'block' }}
                 color="secondary"
-                key={k}
+                key={'' + index + props.IDNumber + props.currentCity}
                 onClick={event => {
                   openPopover(
                     event,
-                    canGoOutOnDay(props.entity, v.canGoOut, v.date, v.day, props.currentCity),
+                    canGoOutOnDay(
+                      props.entity,
+                      value.canGoOut,
+                      value.date,
+                      value.day,
+                      props.currentCity,
+                    ),
                     setPopover,
                     setAnchorEl,
                     setPopoverMessage,
                   )
                 }}>
-                {v.day.slice(0, 3)} {v.date.slice(3).split('/').reverse().join('/')}
-                <Typography style={{ color: cardColor(v.canGoOut) }}>
-                  {icon(v.canGoOut, props.entity)}
+                {value.day.slice(0, 3)}{' '}
+                {value.date.slice(3).split('/').reverse().join('/')}
+                <Typography style={{ color: cardColor(value.canGoOut) }}>
+                  {icon(value.canGoOut, props.entity)}
                 </Typography>
               </Button>
             ))}
@@ -221,37 +246,6 @@ const MainInfoComponent: React.FC<Props> = (props: Props): JSX.Element => {
       </Collapse>
     </div>
   )
-
-  function renderDigits(
-    value: number,
-    index: number,
-    entity: Entity,
-    currentCity: City,
-    callbacks: {
-      setIDNumber: (lastIDNumber: number | null) => void
-      setCanGoOutToday: (canGoOut: GoOutState) => void
-      setCanGoOutWeek: (goOutWeekState: GoOutWeekState) => void
-    },
-  ) {
-    return (
-      <>
-        {index % 3 === 0 ? <br /> : ''}
-        <Button
-          key={index}
-          className={styles.digitButton}
-          onClick={setLastIDNumber(value, entity, currentCity, {
-            set: callbacks.setIDNumber,
-            day: callbacks.setCanGoOutToday,
-            week: callbacks.setCanGoOutWeek,
-          })}
-          color="secondary"
-          variant="outlined"
-          component="span">
-          {value}
-        </Button>
-      </>
-    )
-  }
 }
 
 export { MainInfoComponent }

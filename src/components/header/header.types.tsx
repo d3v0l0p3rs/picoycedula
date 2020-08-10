@@ -6,5 +6,9 @@ export interface Props {
   vehicleIDNumber: number | null
   darkMode: boolean
   setDarkMode: (value: boolean) => void
-  setCurrentCity: (city: City) => void
+  updateData: (data: {
+    personIDNumber?: number | null
+    vehicleIDNumber?: number | null
+    currentCity?: City
+  }) => void
 }
