@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "e151b23c9c69d91cc6d923ea496e1d34",
+    "revision": "cfc5c8641ee832a50f04927278fd824a",
     "url": "/picoycedula/index.html"
   },
   {
-    "revision": "cd2af5f02653fdabea94",
+    "revision": "a37fbe924a596696c42e",
     "url": "/picoycedula/static/css/main.2e884112.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/picoycedula/static/js/2.d72bb554.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "cd2af5f02653fdabea94",
-    "url": "/picoycedula/static/js/main.23740e77.chunk.js"
+    "revision": "a37fbe924a596696c42e",
+    "url": "/picoycedula/static/js/main.2a867eb5.chunk.js"
   },
   {
     "revision": "a1553b6e8e0c395b509d",
