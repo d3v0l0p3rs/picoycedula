@@ -1,0 +1,5 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target" : { "namespace": "android_app", "package_name": "io.github.deftsoluciones.twa",
+                   "sha256_cert_fingerprints": ["D9:6C:7C:E9:35:09:FB:71:B7:2B:3F:6C:EA:83:A9:D0:D9:6E:9F:C6:28:E9:6C:D0:A0:C4:6A:D5:18:AC:83:76"] }
+    }]
