@@ -2,7 +2,7 @@
   "name": "placa-y-cedula",
   "version": "1.0.0",
   "private": true,
-  "homepage": "http://deftsoluciones.github.io/placa-y-cedula",
+  "homepage": "https://placa-y-cedula.herokuapp.com",
   "dependencies": {
     "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.9.1",

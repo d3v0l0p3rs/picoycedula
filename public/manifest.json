@@ -86,5 +86,5 @@
   "display": "standalone",
   "orientation": "portrait",
   "scope": "/",
-  "start_url": "https://deftsoluciones.github.io/placa-y-cedula/"
+  "start_url": "https://placa-y-cedula.herokuapp.com/"
 }
