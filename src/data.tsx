@@ -1,6 +1,6 @@
 import { Entity } from 'components/index.types'
 
-export type City = 'CALI' | 'BOGOTA'
+export type City = 'CALI' | 'BOGOTA' | 'BARRANQUILLA'
 
 export const email = 'deft.soluciones@gmail.com'
 
@@ -12,11 +12,13 @@ export const subjects: { [type in 'issue' | 'contact']: string } = {
 export const cities: { [city in City]: string } = {
   CALI: 'Cali',
   BOGOTA: 'Bogotá',
+  BARRANQUILLA: 'Barranquilla',
 }
 
 export const source: { [city in City]: string } = {
   CALI: 'https://twitter.com/AlcaldiaDeCali',
   BOGOTA: 'https://twitter.com/Bogota',
+  BARRANQUILLA: 'https://twitter.com/alcaldiabquilla?s=20',
 }
 
 const pico_y_cedula: { [city in City]: { [date: string]: number[] } } = {
@@ -54,17 +56,30 @@ const pico_y_cedula: { [city in City]: { [date: string]: number[] } } = {
     '20/08/31': [1, 3, 5, 7, 9],
   },
   BOGOTA: {
-    '20/08/05': [1, 3, 5, 7, 9],
-    '20/08/06': [0, 2, 4, 6, 8],
-    '20/08/07': [1, 3, 5, 7, 9],
-    '20/08/08': [0, 2, 4, 6, 8],
-    '20/08/09': [1, 3, 5, 7, 9],
+    '20/08/13': [0, 2, 4, 6, 8],
+    '20/08/14': [1, 3, 5, 7, 9],
+    '20/08/15': [0, 2, 4, 6, 8],
+    '20/08/16': [1, 3, 5, 7, 9],
+  },
+  BARRANQUILLA: {
+    '20/08/13': [1, 3, 5, 7, 9],
+    '20/08/14': [0, 2, 4, 6, 8],
+    '20/08/15': [1, 3, 5, 7, 9],
+    '20/08/16': [0, 2, 4, 6, 8],
+    '20/08/17': [1, 3, 5, 7, 9],
+    '20/08/18': [0, 2, 4, 6, 8],
+    '20/08/19': [1, 3, 5, 7, 9],
+    '20/08/20': [0, 2, 4, 6, 8],
+    '20/08/21': [1, 3, 5, 7, 9],
+    '20/08/22': [0, 2, 4, 6, 8],
+    '20/08/23': [1, 3, 5, 7, 9],
   },
 }
 
 const pico_y_placa: { [city in City]: { [date: string]: number[] } } = {
   CALI: { '20/07/31': [2, 0] },
   BOGOTA: {},
+  BARRANQUILLA: {},
 }
 
 const pico_y_placa_week: { [city in City]: { [day: number]: number[] } } = {
@@ -85,6 +100,15 @@ const pico_y_placa_week: { [city in City]: { [day: number]: number[] } } = {
     4: [1, 3, 5, 7, 9],
     5: [0, 2, 4, 6, 8],
     6: [],
+  },
+  BARRANQUILLA: {
+    0: [1, 2, 3, 4, 5, 6, 7, 8, 9, 0],
+    1: [1, 2, 3, 4, 5, 6, 7, 8, 9, 0],
+    2: [1, 2, 3, 4, 5, 6, 7, 8, 9, 0],
+    3: [1, 2, 3, 4, 5, 6, 7, 8, 9, 0],
+    4: [1, 2, 3, 4, 5, 6, 7, 8, 9, 0],
+    5: [1, 2, 3, 4, 5, 6, 7, 8, 9, 0],
+    6: [1, 2, 3, 4, 5, 6, 7, 8, 9, 0],
   },
 }
 
