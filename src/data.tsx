@@ -1,6 +1,6 @@
 import { Entity } from 'components/index.types'
 
-export type City = 'CALI' | 'BOGOTA' | 'BARRANQUILLA'
+export type City = 'CALI' | 'BOGOTA' | 'BARRANQUILLA' | 'CUCUTA'
 
 export const email = 'deft.soluciones@gmail.com'
 
@@ -13,12 +13,14 @@ export const cities: { [city in City]: string } = {
   CALI: 'Cali',
   BOGOTA: 'Bogotá',
   BARRANQUILLA: 'Barranquilla',
+  CUCUTA: 'Cúcuta',
 }
 
 export const source: { [city in City]: string } = {
   CALI: 'https://twitter.com/AlcaldiaDeCali',
   BOGOTA: 'https://twitter.com/Bogota',
   BARRANQUILLA: 'https://twitter.com/alcaldiabquilla?s=20',
+  CUCUTA: 'https://twitter.com/AlcaldiaCucuta',
 }
 
 const pico_y_cedula: { [city in City]: { [date: string]: number[] } } = {
@@ -74,12 +76,41 @@ const pico_y_cedula: { [city in City]: { [date: string]: number[] } } = {
     '20/08/22': [0, 2, 4, 6, 8],
     '20/08/23': [1, 3, 5, 7, 9],
   },
+  CUCUTA: {
+    '20/08/13': [7, 8],
+    '20/08/14': [9, 0],
+    '20/08/15': [1, 3, 5, 7, 9],
+    '20/08/16': [0, 2, 4, 6, 8],
+    '20/08/17': [1, 2],
+    '20/08/18': [3, 4],
+    '20/08/19': [5, 6],
+    '20/08/20': [7, 8],
+    '20/08/21': [9, 0],
+    '20/08/22': [0, 2, 4, 6, 8],
+    '20/08/23': [1, 3, 5, 7, 9],
+    '20/08/24': [1, 2],
+    '20/08/25': [3, 4],
+    '20/08/26': [5, 6],
+    '20/08/27': [7, 8],
+    '20/08/28': [9, 0],
+    '20/08/29': [1, 3, 5, 7, 9],
+    '20/08/30': [0, 2, 4, 6, 8],
+    '20/08/31': [1, 2],
+  },
 }
 
 const pico_y_placa: { [city in City]: { [date: string]: number[] } } = {
   CALI: { '20/07/31': [2, 0] },
   BOGOTA: {},
   BARRANQUILLA: {},
+  CUCUTA: {
+     '20/08/15': [1, 3, 5, 7, 9]
+     '20/08/16': [2, 4, 6, 8, 0]
+     '20/08/22': [2, 4, 6, 8, 0]
+     '20/08/23': [1, 3, 5, 7, 9]
+     '20/08/29': [1, 3, 5, 7, 9]
+     '20/08/30': [2, 4, 6, 8, 0]
+  },
 }
 
 const pico_y_placa_week: { [city in City]: { [day: number]: number[] } } = {
@@ -110,6 +141,14 @@ const pico_y_placa_week: { [city in City]: { [day: number]: number[] } } = {
     5: [1, 2, 3, 4, 5, 6, 7, 8, 9, 0],
     6: [1, 2, 3, 4, 5, 6, 7, 8, 9, 0],
   },
+  CUCUTA: {
+    0: [],
+    1: [1, 2],
+    2: [3, 4],
+    3: [5, 6],
+    4: [7, 8],
+    5: [9, 0],
+    6: [],
 }
 
 export const getData = (
