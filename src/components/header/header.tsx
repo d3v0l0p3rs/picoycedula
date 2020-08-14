@@ -16,28 +16,13 @@ import Brightness7Icon from '@material-ui/icons/Brightness7'
 
 const HeaderComponent: React.FC<Props> = (props: Props): JSX.Element => {
   return (
-    <AppBar position="sticky">
+    <div>
+      <AppBar position="sticky">
       <Toolbar>
-        <Typography variant="h5" style={{ color: 'white' }}>
+        <Typography variant="h5" style={{ color: 'white', textAlign: 'left' }}>
           {getLabel('title')}
         </Typography>
-        {props.darkMode ? (
-          <Button
-            style={{ marginLeft: 'auto', color: 'white' }}
-            onClick={() => {
-              props.setDarkMode(false)
-            }}>
-            <Brightness7Icon></Brightness7Icon>
-          </Button>
-        ) : (
-          <Button
-            style={{ marginLeft: 'auto', color: 'white' }}
-            onClick={() => {
-              props.setDarkMode(true)
-            }}>
-            <Brightness4Icon></Brightness4Icon>
-          </Button>
-        )}
+
         <Select
           value={props.currentCity}
           style={{ marginLeft: 'auto', color: 'white' }}
@@ -70,6 +55,26 @@ const HeaderComponent: React.FC<Props> = (props: Props): JSX.Element => {
         </Typography>
       </Collapse>
     </AppBar>
+    {props.darkMode ? (
+          <Button
+            className={styles.styleButton}
+            style={{ color: 'white' }}
+            onClick={() => {
+              props.setDarkMode(false)
+            }}>
+            <Brightness7Icon></Brightness7Icon>
+          </Button>
+        ) : (
+          <Button
+            className={styles.styleButton}
+            style={{ color: 'black' }}
+            onClick={() => {
+              props.setDarkMode(true)
+            }}>
+            <Brightness4Icon></Brightness4Icon>
+          </Button>
+        )}
+    </div>
   )
 }
 
