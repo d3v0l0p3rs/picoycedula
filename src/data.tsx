@@ -20,7 +20,7 @@ export const source: { [city in City]: string } = {
   CALI: 'https://twitter.com/AlcaldiaDeCali',
   BOGOTA: 'https://twitter.com/Bogota',
   BARRANQUILLA: 'https://twitter.com/alcaldiabquilla?s=20',
-  CUCUTA: 'https://twitter.com/AlcaldiaCucuta',
+  CUCUTA: 'https://www.instagram.com/p/CDWNXnPnruH/',
 }
 
 const pico_y_cedula: { [city in City]: { [date: string]: number[] } } = {
@@ -104,12 +104,12 @@ const pico_y_placa: { [city in City]: { [date: string]: number[] } } = {
   BOGOTA: {},
   BARRANQUILLA: {},
   CUCUTA: {
-     '20/08/15': [1, 3, 5, 7, 9]
-     '20/08/16': [2, 4, 6, 8, 0]
-     '20/08/22': [2, 4, 6, 8, 0]
-     '20/08/23': [1, 3, 5, 7, 9]
-     '20/08/29': [1, 3, 5, 7, 9]
-     '20/08/30': [2, 4, 6, 8, 0]
+    '20/08/15': [1, 3, 5, 7, 9],
+    '20/08/16': [2, 4, 6, 8, 0],
+    '20/08/22': [2, 4, 6, 8, 0],
+    '20/08/23': [1, 3, 5, 7, 9],
+    '20/08/29': [1, 3, 5, 7, 9],
+    '20/08/30': [2, 4, 6, 8, 0],
   },
 }
 
@@ -133,13 +133,13 @@ const pico_y_placa_week: { [city in City]: { [day: number]: number[] } } = {
     6: [],
   },
   BARRANQUILLA: {
-    0: [1, 2, 3, 4, 5, 6, 7, 8, 9, 0],
-    1: [1, 2, 3, 4, 5, 6, 7, 8, 9, 0],
-    2: [1, 2, 3, 4, 5, 6, 7, 8, 9, 0],
-    3: [1, 2, 3, 4, 5, 6, 7, 8, 9, 0],
-    4: [1, 2, 3, 4, 5, 6, 7, 8, 9, 0],
-    5: [1, 2, 3, 4, 5, 6, 7, 8, 9, 0],
-    6: [1, 2, 3, 4, 5, 6, 7, 8, 9, 0],
+    0: [],
+    1: [],
+    2: [],
+    3: [],
+    4: [],
+    5: [],
+    6: [],
   },
   CUCUTA: {
     0: [],
@@ -149,6 +149,7 @@ const pico_y_placa_week: { [city in City]: { [day: number]: number[] } } = {
     4: [7, 8],
     5: [9, 0],
     6: [],
+  },
 }
 
 export const getData = (
