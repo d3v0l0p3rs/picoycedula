@@ -85,6 +85,6 @@
   "background_color": "#ffffff",
   "display": "standalone",
   "orientation": "portrait",
-  "scope": "../",
-  "start_url": "https://d3v0l0p3rs.github.io/picoycedula/"
+  "scope": "/",
+  "start_url": "https://placa-y-cedula.herokuapp.com/"
 }
