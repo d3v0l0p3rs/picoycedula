@@ -18,62 +18,69 @@ const HeaderComponent: React.FC<Props> = (props: Props): JSX.Element => {
   return (
     <div>
       <AppBar position="sticky">
-      <Toolbar>
-        <Typography variant="h5" style={{ color: 'white', textAlign: 'left' }}>
-          {getLabel('title')}
-        </Typography>
+        <Toolbar>
+          <Typography variant="h5" style={{ color: 'white', textAlign: 'left' }}>
+            {getLabel('title')}
+          </Typography>
 
-        <Select
-          value={props.currentCity}
-          style={{ marginLeft: 'auto', color: 'white' }}
-          onChange={e => {
-            props.updateData({
-              currentCity: e.target.value as City,
-            })
-          }}
-          className={styles.selectedCity}>
-          {Object.entries(cities).map(([key, value]) => (
-            <MenuItem key={key} value={key} className={styles.cityContainer}>
-              {value}
-            </MenuItem>
-          ))}
-        </Select>
-      </Toolbar>
+          <Select
+            value={props.currentCity}
+            style={{ marginLeft: 'auto', color: 'white' }}
+            onChange={e => {
+              props.updateData({
+                currentCity: e.target.value as City,
+              })
+            }}
+            className={styles.selectedCity}>
+            {Object.entries(cities).map(([key, value]) => (
+              <MenuItem key={key} value={key} className={styles.cityContainer}>
+                {value}
+              </MenuItem>
+            ))}
+          </Select>
+        </Toolbar>
 
-      <Collapse in={props.personIDNumber !== null || props.vehicleIDNumber !== null}>
-        <Typography
-          variant="subtitle1"
-          color="textSecondary"
-          style={{ width: 'fit-content', paddingLeft: '20px', lineHeight: '20px' }}>
-          {props.personIDNumber !== null ? 'Cédula: ...' + props.personIDNumber : ''}
-          {props.personIDNumber !== null && props.vehicleIDNumber !== null
-            ? ' | '
-            : ''}
-          {props.vehicleIDNumber !== null
-            ? 'Placa: ...' + props.vehicleIDNumber
-            : ''}
-        </Typography>
-      </Collapse>
-    </AppBar>
-    {props.darkMode ? (
-          <Button
-            className={styles.styleButton}
-            style={{ color: 'white' }}
-            onClick={() => {
-              props.setDarkMode(false)
+        <Collapse
+          in={props.personIDNumber !== null || props.vehicleIDNumber !== null}>
+          <Typography
+            variant="subtitle1"
+            color="textSecondary"
+            style={{
+              width: 'fit-content',
+              paddingLeft: '20px',
+              lineHeight: '20px',
             }}>
-            <Brightness7Icon></Brightness7Icon>
-          </Button>
-        ) : (
-          <Button
-            className={styles.styleButton}
-            style={{ color: 'black' }}
-            onClick={() => {
-              props.setDarkMode(true)
-            }}>
-            <Brightness4Icon></Brightness4Icon>
-          </Button>
-        )}
+            {props.personIDNumber !== null
+              ? 'Cédula: ...' + props.personIDNumber
+              : ''}
+            {props.personIDNumber !== null && props.vehicleIDNumber !== null
+              ? ' | '
+              : ''}
+            {props.vehicleIDNumber !== null
+              ? 'Placa: ...' + props.vehicleIDNumber
+              : ''}
+          </Typography>
+        </Collapse>
+      </AppBar>
+      {props.darkMode ? (
+        <Button
+          className={styles.styleButton}
+          style={{ color: 'white' }}
+          onClick={() => {
+            props.setDarkMode(false)
+          }}>
+          <Brightness7Icon></Brightness7Icon>
+        </Button>
+      ) : (
+        <Button
+          className={styles.styleButton}
+          style={{ color: 'black' }}
+          onClick={() => {
+            props.setDarkMode(true)
+          }}>
+          <Brightness4Icon></Brightness4Icon>
+        </Button>
+      )}
     </div>
   )
 }
