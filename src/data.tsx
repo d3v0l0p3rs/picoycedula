@@ -1,6 +1,7 @@
 import { Entity } from 'components/index.types'
 
-export type City = 'CALI' | 'BOGOTA' | 'BARRANQUILLA' | 'CUCUTA'
+export type City = 'BARRANQUILLA' | 'BOGOTA' | 'BUCARAMANGA' | 'BUGA' | 'CALI' | 'CUCUTA' | 'JAMUNDI' | 'MEDELLIN' |
+'PALMIRA' | 'YUMBO'
 
 export const email = 'deft.soluciones@gmail.com'
 
@@ -10,36 +11,33 @@ export const subjects: { [type in 'issue' | 'contact']: string } = {
 }
 
 export const cities: { [city in City]: string } = {
-  CALI: 'Cali',
-  BOGOTA: 'Bogotá',
   BARRANQUILLA: 'Barranquilla',
+  BOGOTA: 'Bogotá',
+  BUCARAMANGA: 'Bucaramanga',
+  BUGA: 'Buga',
+  CALI: 'Cali',
   CUCUTA: 'Cúcuta',
+  JAMUNDI: 'Jamundí',
+  MEDELLIN: 'Medellín',
+  PALMIRA: 'Palmira',
+  YUMBO: 'Yumbo',
 }
 
 export const source: { [city in City]: string } = {
   CALI: 'https://twitter.com/AlcaldiaDeCali',
-  BOGOTA: 'https://twitter.com/Bogota',
+  BOGOTA: 'https://twitter.com/ClaudiaLopez/status/1295676818343645184?s=20',
   BARRANQUILLA: 'https://twitter.com/alcaldiabquilla?s=20',
+  BUGA: 'https://twitter.com/AlcaldiaBuga/status/1289249870298009601?s=20',
   CUCUTA: 'https://www.instagram.com/p/CDWNXnPnruH/',
+  JAMUNDI:'https://www.facebook.com/AlcaldiaMunicipalJamundi/photos/a.1270549679660733/3170530669662615/?type=1&theater',
+  PALMIRA: 'https://www.palmira.gov.co/attachments/article/9120/2020%2008%2013%20-%20Decreto%20888%20Por%20el%20cual%20se%20dictan%20medidas%20de%20aislamiento%20en%20el%20Municipio%20de%20Palmira.pdf',
+  YUMBO: 'https://www.facebook.com/alcaldiayumbo/photos/pcb.2827031144223125/2826999070892999/?type=3&theater',
+  MEDELLIN: 'https://www.antena2.com/mas-alla-del-deporte/pico-y-cedula-en-medellin-desde-el-18-al-30-de-agosto',
+  BUCARAMANGA: 'https://twitter.com/AlcaldiaBGA/status/1296036334541385730?s=20',
 }
 
 const pico_y_cedula: { [city in City]: { [date: string]: number[] } } = {
   CALI: {
-    '20/08/01': [1, 3, 5, 7, 9],
-    '20/08/02': [0, 2, 4, 6, 8],
-    '20/08/03': [1, 3, 5, 7, 9],
-    '20/08/04': [0, 2, 4, 6, 8],
-    '20/08/05': [1, 3, 5, 7, 9],
-    '20/08/06': [0, 2, 4, 6, 8],
-    '20/08/07': [1, 3, 5, 7, 9],
-    '20/08/08': [0, 2, 4, 6, 8],
-    '20/08/09': [1, 3, 5, 7, 9],
-    '20/08/10': [0, 2, 4, 6, 8],
-    '20/08/11': [1, 3, 5, 7, 9],
-    '20/08/12': [0, 2, 4, 6, 8],
-    '20/08/13': [1, 3, 5, 7, 9],
-    '20/08/14': [0, 2, 4, 6, 8],
-    '20/08/15': [1, 3, 5, 7, 9],
     '20/08/16': [0, 2, 4, 6, 8],
     '20/08/17': [1, 3, 5, 7, 9],
     '20/08/18': [0, 2, 4, 6, 8],
@@ -58,10 +56,11 @@ const pico_y_cedula: { [city in City]: { [date: string]: number[] } } = {
     '20/08/31': [1, 3, 5, 7, 9],
   },
   BOGOTA: {
-    '20/08/13': [0, 2, 4, 6, 8],
-    '20/08/14': [1, 3, 5, 7, 9],
-    '20/08/15': [0, 2, 4, 6, 8],
-    '20/08/16': [1, 3, 5, 7, 9],
+    '20/08/19': [1, 3, 5, 7, 9],
+    '20/08/20': [2, 4, 6, 8, 0],
+    '20/08/21': [1, 3, 5, 7, 9],
+    '20/08/22': [2, 4, 6, 8, 0],
+    '20/08/23': [1, 3, 5, 7, 9],
   },
   BARRANQUILLA: {
     '20/08/13': [1, 3, 5, 7, 9],
@@ -75,6 +74,22 @@ const pico_y_cedula: { [city in City]: { [date: string]: number[] } } = {
     '20/08/21': [1, 3, 5, 7, 9],
     '20/08/22': [0, 2, 4, 6, 8],
     '20/08/23': [1, 3, 5, 7, 9],
+  },
+  BUGA: {
+    '20/08/18': [1, 3, 5, 7, 9],
+    '20/08/19': [0, 2, 4, 6, 8],
+    '20/08/20': [1, 3, 5, 7, 9],
+    '20/08/21': [0, 2, 4, 6, 8],
+    '20/08/22': [1, 3, 5, 7, 9],
+    '20/08/23': [0, 2, 4, 6, 8],
+    '20/08/24': [1, 3, 5, 7, 9],
+    '20/08/25': [0, 2, 4, 6, 8],
+    '20/08/26': [1, 3, 5, 7, 9],
+    '20/08/27': [0, 2, 4, 6, 8],
+    '20/08/28': [1, 3, 5, 7, 9],
+    '20/08/29': [0, 2, 4, 6, 8],
+    '20/08/30': [1, 3, 5, 7, 9],
+    '20/08/31': [0, 2, 4, 6, 8],
   },
   CUCUTA: {
     '20/08/13': [7, 8],
@@ -97,12 +112,79 @@ const pico_y_cedula: { [city in City]: { [date: string]: number[] } } = {
     '20/08/30': [0, 2, 4, 6, 8],
     '20/08/31': [1, 2],
   },
+  JAMUNDI: {
+    '20/08/19': [1, 3, 5, 7, 9],
+    '20/08/20': [2, 4, 6, 8, 0],
+    '20/08/21': [1, 3, 5, 7, 9],
+    '20/08/22': [2, 4, 6, 8, 0],
+    '20/08/23': [1, 3, 5, 7, 9],
+  },
+  PALMIRA: {
+    '20/08/19': [5, 6, 7, 8],
+    '20/08/20': [9, 0, 1, 2],
+    '20/08/21': [3, 4, 5, 6],
+    '20/08/22': [7, 8, 9, 0],
+    '20/08/23': [],
+    '20/08/24': [],
+    '20/08/25': [1, 2, 3, 4],
+    '20/08/26': [5, 6, 7, 8],
+    '20/08/27': [9, 0, 1, 2],
+    '20/08/28': [3, 4, 5, 6],
+    '20/08/29': [7, 8, 9, 0],
+    '20/08/30': [],
+    '20/08/31': [],
+  },
+  YUMBO: {
+    '20/08/19': [4, 5],
+    '20/08/20': [6, 7],
+    '20/08/21': [8, 9, 0],
+    '20/08/22': [0, 2, 4, 6, 8],
+    '20/08/23': [1, 3, 5, 7, 9],
+    '20/08/24': [1, 2],
+    '20/08/25': [3, 4],
+    '20/08/26': [5, 6],
+    '20/08/27': [7, 8],
+    '20/08/28': [9, 0],
+    '20/08/29': [0, 2, 4, 6, 8],
+    '20/08/30': [1, 3, 5, 7, 9],
+    '20/08/31': [1, 2],
+  },
+  MEDELLIN: {
+    '20/08/19': [2, 3],
+    '20/08/20': [4, 5],
+    '20/08/21': [6, 7],
+    '20/08/22': [8, 9],
+    '20/08/23': [0, 1],
+    '20/08/24': [0, 1],
+    '20/08/25': [2, 3],
+    '20/08/26': [4, 5],
+    '20/08/27': [6, 7],
+    '20/08/28': [8, 9],
+    '20/08/29': [2, 3],
+    '20/08/30': [4, 5],
+  },
+  BUCARAMANGA:{
+    '20/08/19': [7, 8],
+    '20/08/20': [9, 0],
+    '20/08/21': [1, 2],
+    '20/08/22': [3, 2],
+    '20/08/23': [],
+    '20/08/24': [5, 6],
+    '20/08/25': [7, 8],
+    '20/08/26': [9, 0],
+    '20/08/27': [1, 2],
+    '20/08/28': [3, 4],
+    '20/08/29': [5, 6],
+    '20/08/30': [],
+    '20/08/31': [7, 8],
+  },
 }
 
 const pico_y_placa: { [city in City]: { [date: string]: number[] } } = {
   CALI: { '20/07/31': [2, 0] },
   BOGOTA: {},
   BARRANQUILLA: {},
+  BUGA: {},
   CUCUTA: {
     '20/08/15': [1, 3, 5, 7, 9],
     '20/08/16': [2, 4, 6, 8, 0],
@@ -111,6 +193,11 @@ const pico_y_placa: { [city in City]: { [date: string]: number[] } } = {
     '20/08/29': [1, 3, 5, 7, 9],
     '20/08/30': [2, 4, 6, 8, 0],
   },
+  JAMUNDI:{},
+  PALMIRA:{},
+  YUMBO:{},
+  MEDELLIN:{},
+  BUCARAMANGA:{},
 }
 
 const pico_y_placa_week: { [city in City]: { [day: number]: number[] } } = {
@@ -141,6 +228,9 @@ const pico_y_placa_week: { [city in City]: { [day: number]: number[] } } = {
     5: [],
     6: [],
   },
+  BUGA: {
+
+  },
   CUCUTA: {
     0: [],
     1: [1, 2],
@@ -149,6 +239,21 @@ const pico_y_placa_week: { [city in City]: { [day: number]: number[] } } = {
     4: [7, 8],
     5: [9, 0],
     6: [],
+  },
+  JAMUNDI: {
+
+  },
+  PALMIRA: {
+
+  },
+  YUMBO: {
+
+  },
+  MEDELLIN: {
+
+  },
+  BUCARAMANGA: {
+
   },
 }
 
