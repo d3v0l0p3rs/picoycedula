@@ -1,5 +1,10 @@
-[{
-      "relation": ["delegate_permission/common.handle_all_urls"],
-      "target" : { "namespace": "android_app", "package_name": "com.herokuapp.placa_y_cedula.twa",
-                   "sha256_cert_fingerprints": ["7B:99:34:D8:D2:A1:71:01:B8:C0:D3:52:C6:41:A8:65:37:E3:28:A1:A8:49:3A:C2:E8:0C:FC:63:E9:6E:F8:40"] }
-    }]
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target" : {
+          "namespace": "android_app",
+          "package_name": "com.herokuapp.placa_y_cedula.twa",
+          "sha256_cert_fingerprints": ["7B:99:34:D8:D2:A1:71:01:B8:C0:D3:52:C6:41:A8:65:37:E3:28:A1:A8:49:3A:C2:E8:0C:FC:63:E9:6E:F8:40"]
+    }
+  }
+]
