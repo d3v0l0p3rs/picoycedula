@@ -1,7 +1,7 @@
 import { Entity, City, GoOutState, cities, Day } from 'components/index.types'
 
 const labels: { [name: string]: string } = {
-  title: 'Pico y Cédula',
+  title: 'Placa y Cédula',
   pickLastCCNumber: 'Seleccione el último dígito de su cédula',
   pickLastPlateNumber: 'Seleccione el último dígito de su placa',
   pickAnotherLastNumber: 'Seleccionar otro dígito',
