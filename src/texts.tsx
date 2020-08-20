@@ -18,7 +18,7 @@ export const getLabel = (name: string): string => {
 export const todayCanGoOutside = (entity: Entity, city: City): string => {
   return {
     person: `Hoy pueden salir en ${cities[city]} las personas cuyos números de cédula terminen en `,
-    vehicle: `Hoy pueden rodar en ${cities[city]} los vehículos cuyas placas terminen en `,
+    vehicle: `Hoy pueden transitar en ${cities[city]} los vehículos cuyas placas terminen en `,
   }[entity]
 }
 
@@ -63,7 +63,6 @@ export const canGoOutOnDay = (
 export const lastNumbersCanGoOut = (entity: Entity): string => {
   return {
     person: 'Las personas con cédulas terminadas en estos números pueden salir hoy',
-    vehicle:
-      'Los vehículos con placas terminadas en estos números NO pueden salir hoy',
+    vehicle: 'Los vehículos con placas terminadas en estos números pueden salir hoy',
   }[entity]
 }
