@@ -1,7 +1,16 @@
 import { Entity } from 'components/index.types'
 
-export type City = 'BARRANQUILLA' | 'BOGOTA' | 'BUCARAMANGA' | 'BUGA' | 'CALI' | 'CUCUTA' | 'JAMUNDI' | 'MEDELLIN' |
-'PALMIRA' | 'YUMBO'
+export type City =
+  | 'BARRANQUILLA'
+  | 'BOGOTA'
+  | 'BUCARAMANGA'
+  | 'BUGA'
+  | 'CALI'
+  | 'CUCUTA'
+  | 'JAMUNDI'
+  | 'MEDELLIN'
+  | 'PALMIRA'
+  | 'YUMBO'
 
 export const email = 'deft.soluciones@gmail.com'
 
@@ -25,15 +34,19 @@ export const cities: { [city in City]: string } = {
 
 export const source: { [city in City]: string } = {
   CALI: 'https://twitter.com/AlcaldiaDeCali',
-  BOGOTA: 'https://twitter.com/ClaudiaLopez/status/1295676818343645184?s=20',
-  BARRANQUILLA: 'https://twitter.com/alcaldiabquilla?s=20',
-  BUGA: 'https://twitter.com/AlcaldiaBuga/status/1289249870298009601?s=20',
-  CUCUTA: 'https://www.instagram.com/p/CDWNXnPnruH/',
-  JAMUNDI:'https://www.facebook.com/AlcaldiaMunicipalJamundi/photos/a.1270549679660733/3170530669662615/?type=1&theater',
-  PALMIRA: 'https://www.palmira.gov.co/attachments/article/9120/2020%2008%2013%20-%20Decreto%20888%20Por%20el%20cual%20se%20dictan%20medidas%20de%20aislamiento%20en%20el%20Municipio%20de%20Palmira.pdf',
-  YUMBO: 'https://www.facebook.com/alcaldiayumbo/photos/pcb.2827031144223125/2826999070892999/?type=3&theater',
-  MEDELLIN: 'https://www.antena2.com/mas-alla-del-deporte/pico-y-cedula-en-medellin-desde-el-18-al-30-de-agosto',
-  BUCARAMANGA: 'https://twitter.com/AlcaldiaBGA/status/1296036334541385730?s=20',
+  BOGOTA: 'https://twitter.com/ClaudiaLopez/status/1295676818343645184',
+  BARRANQUILLA: 'https://twitter.com/alcaldiabquilla',
+  BUGA: 'https://twitter.com/AlcaldiaBuga/status/1289249870298009601',
+  CUCUTA: 'https://www.instagram.com/p/CDWNXnPnruH',
+  JAMUNDI:
+    'https://www.facebook.com/AlcaldiaMunicipalJamundi/photos/a.1270549679660733/3170530669662615',
+  PALMIRA:
+    'https://www.palmira.gov.co/attachments/article/9120/2020%2008%2013%20-%20Decreto%20888%20Por%20el%20cual%20se%20dictan%20medidas%20de%20aislamiento%20en%20el%20Municipio%20de%20Palmira.pdf',
+  YUMBO:
+    'https://www.facebook.com/alcaldiayumbo/photos/pcb.2827031144223125/2826999070892999',
+  MEDELLIN:
+    'https://www.antena2.com/mas-alla-del-deporte/pico-y-cedula-en-medellin-desde-el-18-al-30-de-agosto',
+  BUCARAMANGA: 'https://twitter.com/AlcaldiaBGA/status/1296036334541385730',
 }
 
 const pico_y_cedula: { [city in City]: { [date: string]: number[] } } = {
@@ -163,7 +176,7 @@ const pico_y_cedula: { [city in City]: { [date: string]: number[] } } = {
     '20/08/29': [2, 3],
     '20/08/30': [4, 5],
   },
-  BUCARAMANGA:{
+  BUCARAMANGA: {
     '20/08/19': [7, 8],
     '20/08/20': [9, 0],
     '20/08/21': [1, 2],
@@ -193,11 +206,11 @@ const pico_y_placa: { [city in City]: { [date: string]: number[] } } = {
     '20/08/29': [1, 3, 5, 7, 9],
     '20/08/30': [2, 4, 6, 8, 0],
   },
-  JAMUNDI:{},
-  PALMIRA:{},
-  YUMBO:{},
-  MEDELLIN:{},
-  BUCARAMANGA:{},
+  JAMUNDI: {},
+  PALMIRA: {},
+  YUMBO: {},
+  MEDELLIN: {},
+  BUCARAMANGA: {},
 }
 
 const pico_y_placa_week: { [city in City]: { [day: number]: number[] } } = {
@@ -228,9 +241,7 @@ const pico_y_placa_week: { [city in City]: { [day: number]: number[] } } = {
     5: [],
     6: [],
   },
-  BUGA: {
-
-  },
+  BUGA: {},
   CUCUTA: {
     0: [],
     1: [1, 2],
@@ -240,21 +251,11 @@ const pico_y_placa_week: { [city in City]: { [day: number]: number[] } } = {
     5: [9, 0],
     6: [],
   },
-  JAMUNDI: {
-
-  },
-  PALMIRA: {
-
-  },
-  YUMBO: {
-
-  },
-  MEDELLIN: {
-
-  },
-  BUCARAMANGA: {
-
-  },
+  JAMUNDI: {},
+  PALMIRA: {},
+  YUMBO: {},
+  MEDELLIN: {},
+  BUCARAMANGA: {},
 }
 
 export const getData = (
