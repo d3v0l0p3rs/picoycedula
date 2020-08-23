@@ -68,10 +68,10 @@ export const canGoOutWeek = (
 }
 
 const openPopover = (
-  event: { currentTarget: Element },
+  event: { currentTarget: HTMLButtonElement },
   message: string,
   popoverCallback: (value: boolean) => void,
-  anchorCallback: (value: Element | null) => void,
+  anchorCallback: (value: HTMLButtonElement | null) => void,
   setPopoverMessage: (message: string) => void,
 ) => {
   anchorCallback(event.currentTarget)
@@ -80,7 +80,7 @@ const openPopover = (
 }
 const closePopover = (
   popoverCallback: (value: boolean) => void,
-  anchorCallback: (value: Element | null) => void,
+  anchorCallback: (value: HTMLButtonElement | null) => void,
   setPopoverMessage: (message: string) => void,
 ) => {
   anchorCallback(null)
@@ -91,7 +91,7 @@ const closePopover = (
 const MainInfoComponent: React.FC<Props> = (props: Props): JSX.Element => {
   const [popover, setPopover] = useState<boolean>(false)
   const [popoverMessage, setPopoverMessage] = useState<string>('')
-  const [anchorEl, setAnchorEl] = useState<Element | null>(null)
+  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null)
 
   return (
     <div>
@@ -229,16 +229,22 @@ const MainInfoComponent: React.FC<Props> = (props: Props): JSX.Element => {
           <Popover
             open={popover}
             anchorEl={anchorEl}
+            PaperProps={{
+              style: {
+                padding: '5px',
+                maxWidth: '150px',
+              },
+            }}
             onClose={() => {
               closePopover(setPopover, setAnchorEl, setPopoverMessage)
             }}
             anchorOrigin={{
               vertical: 'bottom',
-              horizontal: 'left',
+              horizontal: 'center',
             }}
             transformOrigin={{
               vertical: 'top',
-              horizontal: 'left',
+              horizontal: 'center',
             }}>
             {popoverMessage}
           </Popover>
