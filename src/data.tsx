@@ -11,6 +11,11 @@ export type City =
   | 'MEDELLIN'
   | 'PALMIRA'
   | 'YUMBO'
+  | 'CERRITO'
+  | 'MANIZALES'
+  | 'ARMENIA'
+  | 'CARTAGENA'
+  | 'POPAYAN'
 
 export const email = 'deft.soluciones@gmail.com'
 
@@ -20,15 +25,20 @@ export const subjects: { [type in 'issue' | 'contact']: string } = {
 }
 
 export const cities: { [city in City]: string } = {
+  ARMENIA: 'Armenia',
   BARRANQUILLA: 'Barranquilla',
   BOGOTA: 'Bogotá',
   BUCARAMANGA: 'Bucaramanga',
   BUGA: 'Buga',
   CALI: 'Cali',
+  CARTAGENA: 'Cartagena',
+  CERRITO: 'El Cerrito',
   CUCUTA: 'Cúcuta',
   JAMUNDI: 'Jamundí',
+  MANIZALES: 'Manizales',
   MEDELLIN: 'Medellín',
   PALMIRA: 'Palmira',
+  POPAYAN: 'Popayán',
   YUMBO: 'Yumbo',
 }
 
@@ -47,6 +57,11 @@ export const source: { [city in City]: string } = {
   MEDELLIN:
     'https://www.antena2.com/mas-alla-del-deporte/pico-y-cedula-en-medellin-desde-el-18-al-30-de-agosto',
   BUCARAMANGA: 'https://twitter.com/AlcaldiaBGA/status/1296036334541385730',
+  CERRITO: 'https://twitter.com/MPIOELCERRITO/status/1291863312175640576/photo/1',
+  MANIZALES: 'https://twitter.com/CiudadManizales',
+  ARMENIA:'https://twitter.com/AlcaldiaArmenia/status/1297574950556053505',
+  CARTAGENA: 'https://twitter.com/AlcaldiaCTG/status/1294006124056915968/photo/1',
+  POPAYAN: 'https://twitter.com/AlcaldiaPopayan/status/1289316849826635777/photo/1',
 }
 
 const pico_y_cedula: { [city in City]: { [date: string]: number[] } } = {
@@ -193,6 +208,56 @@ const pico_y_cedula: { [city in City]: { [date: string]: number[] } } = {
     '20/08/30': [],
     '20/08/31': [7, 8],
   },
+  CERRITO: {
+    '20/08/24': [0, 1, 2],
+    '20/08/25': [3, 4, 5],
+    '20/08/26': [6, 7, 8, 9],
+    '20/08/27': [0, 1, 2],
+    '20/08/28': [3, 4, 5],
+    '20/08/29': [6, 7, 8, 9],
+    '20/08/30': [],
+    '20/08/31': [0, 1, 2],
+  },
+  MANIZALES: {
+    '20/08/24': [1, 2, 3, 4],
+    '20/08/25': [5, 6, 7, 8],
+    '20/08/26': [9, 0, 1, 2],
+    '20/08/27': [3, 4, 5, 6],
+    '20/08/28': [7, 8, 9, 0],
+    '20/08/29': [],
+    '20/08/30': [],
+    '20/08/31': [1, 2, 3, 4]
+  },
+  ARMENIA: {
+    '20/08/24': [0, 2, 4, 6, 8],
+    '20/08/25': [1, 3, 5, 7, 9],
+    '20/08/26': [0, 2, 4, 6, 8],
+    '20/08/27': [1, 3, 5, 7, 9],
+    '20/08/28': [0, 2, 4, 6, 8],
+    '20/08/29': [1, 3, 5, 7, 9],
+    '20/08/30': [0, 2, 4, 6, 8],
+    '20/08/31': [1, 3, 5, 7, 9],
+  },
+  CARTAGENA: {
+    '20/08/24': [2, 3],
+    '20/08/25': [4, 5],
+    '20/08/26': [6, 7],
+    '20/08/27': [8, 9],
+    '20/08/28': [0, 1],
+    '20/08/29': [2, 3],
+    '20/08/30': [4, 5],
+    '20/08/31': [6, 7],
+  },
+  POPAYAN: {
+    '20/08/24': [1, 2],
+    '20/08/25': [3, 4],
+    '20/08/26': [5, 6],
+    '20/08/27': [7, 8],
+    '20/08/28': [9, 0],
+    '20/08/29': [1, 2],
+    '20/08/30': [],
+    '20/08/31': [2, 3],
+  },
 }
 
 const pico_y_placa: { [city in City]: { [date: string]: number[] } } = {
@@ -213,6 +278,11 @@ const pico_y_placa: { [city in City]: { [date: string]: number[] } } = {
   YUMBO: {},
   MEDELLIN: {},
   BUCARAMANGA: {},
+  CERRITO: {},
+  MANIZALES: {},
+  ARMENIA: {},
+  CARTAGENA: {},
+  POPAYAN: {},
 }
 
 const pico_y_placa_week: { [city in City]: { [day: number]: number[] } } = {
@@ -258,6 +328,11 @@ const pico_y_placa_week: { [city in City]: { [day: number]: number[] } } = {
   YUMBO: {},
   MEDELLIN: {},
   BUCARAMANGA: {},
+  CERRITO: {},
+  MANIZALES: {},
+  ARMENIA: {},
+  CARTAGENA: {},
+  POPAYAN: {},
 }
 
 export const getData = (
