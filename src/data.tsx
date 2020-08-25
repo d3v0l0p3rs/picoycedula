@@ -16,6 +16,7 @@ export type City =
   | 'ARMENIA'
   | 'CARTAGENA'
   | 'POPAYAN'
+  | 'BUENAVENTURA'
 
 export const email = 'deft.soluciones@gmail.com'
 
@@ -29,6 +30,7 @@ export const cities: { [city in City]: string } = {
   BARRANQUILLA: 'Barranquilla',
   BOGOTA: 'Bogotá',
   BUCARAMANGA: 'Bucaramanga',
+  BUENAVENTURA: 'Buenaventura',
   BUGA: 'Buga',
   CALI: 'Cali',
   CARTAGENA: 'Cartagena',
@@ -62,6 +64,7 @@ export const source: { [city in City]: string } = {
   ARMENIA:'https://twitter.com/AlcaldiaArmenia/status/1297574950556053505',
   CARTAGENA: 'https://twitter.com/AlcaldiaCTG/status/1294006124056915968/photo/1',
   POPAYAN: 'https://twitter.com/AlcaldiaPopayan/status/1289316849826635777/photo/1',
+  BUENAVENTURA: 'https://www.facebook.com/AlcaldiaBuenaventura/photos/a.625253074254338/3002690809843874',
 }
 
 const pico_y_cedula: { [city in City]: { [date: string]: number[] } } = {
@@ -258,6 +261,16 @@ const pico_y_cedula: { [city in City]: { [date: string]: number[] } } = {
     '20/08/30': [],
     '20/08/31': [2, 3],
   },
+  BUENAVENTURA: {
+    '20/08/24': [1, 2, 3],
+    '20/08/25': [4, 5, 6],
+    '20/08/26': [7, 8, 9],
+    '20/08/27': [0, 1, 2],
+    '20/08/28': [3, 4, 5],
+    '20/08/29': [6, 7, 8],
+    '20/08/30': [9, 0],
+    '20/08/31': [1, 2, 3],
+  },
 }
 
 const pico_y_placa: { [city in City]: { [date: string]: number[] } } = {
@@ -283,6 +296,7 @@ const pico_y_placa: { [city in City]: { [date: string]: number[] } } = {
   ARMENIA: {},
   CARTAGENA: {},
   POPAYAN: {},
+  BUENAVENTURA: {},
 }
 
 const pico_y_placa_week: { [city in City]: { [day: number]: number[] } } = {
@@ -333,6 +347,7 @@ const pico_y_placa_week: { [city in City]: { [day: number]: number[] } } = {
   ARMENIA: {},
   CARTAGENA: {},
   POPAYAN: {},
+  BUENAVENTURA: {},
 }
 
 export const getData = (
