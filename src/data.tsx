@@ -46,7 +46,7 @@ export const cities: { [city in City]: string } = {
 
 export const source: { [city: string]: string } = {
   CALI: 'https://twitter.com/AlcaldiaDeCali',
-  BOGOTA: 'https://twitter.com/ClaudiaLopez/status/1300387861263458304/photo/1',
+  BOGOTA: 'https://twitter.com/Bogota',
   /*BARRANQUILLA: 'https://twitter.com/alcaldiabquilla/header_photo',
   BUGA: 'https://twitter.com/AlcaldiaBuga/status/1289249870298009601',
   CUCUTA: 'https://www.instagram.com/p/CDWNXnPnruH',
